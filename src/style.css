@@ -2,6 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+*{
+    font-family: 'Bree Serif', serif;
+}
+
+
 .page-container{
     position: relative;
     min-height: 100vh;
