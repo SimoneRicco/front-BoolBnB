@@ -101,8 +101,4 @@ export default {};
   </header>
 </template>
 
-<style>
-#default-carousel {
-  background-color: black;
-}
-</style>
+<style></style>
