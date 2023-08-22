@@ -1,10 +1,14 @@
 <script>
 import Footer from "./components/partials/Footer.vue";
 import Header from "./components/partials/Header.vue";
+import { initFlowbite } from "flowbite";
 export default {
   components: {
     Header,
     Footer,
+  },
+  created() {
+    initFlowbite();
   },
 };
 </script>
@@ -13,7 +17,7 @@ export default {
   <div class="template font-mono page-container">
     <div id="content-wrap">
       <Header />
-      <main class="container mx-auto px-4">
+      <main>
         <router-view></router-view>
       </main>
     </div>
