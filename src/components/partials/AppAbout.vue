@@ -10,7 +10,7 @@ export default {
 <template>
     <main>
         <section>
-            <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://images.hdqwalls.com/wallpapers/bon-voyage-trip-4k-2d.jpg); border-top: 5px solid #FDEDFA; border-bottom: 5px solid #FDEDFA;">
+            <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://images.hdqwalls.com/wallpapers/bon-voyage-trip-4k-2d.jpg);">
                 <h1 style="z-index: 20;" class="text-white text-9xl mt-12">Chi siamo...</h1>
                 <h2 style="z-index: 20; font-style: italic;" class="text-white text-3xl mt-12">Una storia iniziata da una passione comune...</h2>
                 <div class="black-layer"></div>
