@@ -13,7 +13,7 @@ export default {
   <div class="template font-mono page-container">
     <div id="content-wrap">
       <Header />
-      <main class="container mx-auto px-4">
+      <main>
         <router-view></router-view>
       </main>
     </div>
