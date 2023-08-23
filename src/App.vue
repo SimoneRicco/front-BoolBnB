@@ -19,6 +19,7 @@ export default {
     </div>
     <Footer />
   </div>
+  
 </template>
 
 <style></style>

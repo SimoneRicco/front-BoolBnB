@@ -11,13 +11,13 @@ export default {
     <main>
         <section>
             <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://images.hdqwalls.com/wallpapers/bon-voyage-trip-4k-2d.jpg); border-top: 5px solid #FDEDFA; border-bottom: 5px solid #FDEDFA;">
-                <h1 style="z-index: 99;" class="text-white text-9xl mt-12">Chi siamo...</h1>
-                <h2 style="z-index: 99; font-style: italic;" class="text-white text-3xl mt-12">Una storia iniziata da una passione comune...</h2>
+                <h1 style="z-index: 20;" class="text-white text-9xl mt-12">Chi siamo...</h1>
+                <h2 style="z-index: 20; font-style: italic;" class="text-white text-3xl mt-12">Una storia iniziata da una passione comune...</h2>
                 <div class="black-layer"></div>
             </div>
         </section>
         <section>
-            <div class="p-1" style="background-color: #FDEDFA;">
+            <div class="p-1" style="background-color: #f7daf2;">
             <h1 style="font-style: italic;" class="text-center text-6xl mt-32">Da viaggiatori...per i viaggiatori!</h1>
 
             <div class="my-32">
@@ -39,13 +39,13 @@ export default {
         </section>
         <section>
             <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://busites-www.s3.amazonaws.com/blog-margaritaville/2018/11/ThinkstockPhotos-891573112.jpg); background-repeat: no-repeat; background-size: cover;">
-                <h1 style="z-index: 99;" class="text-white text-9xl mt-12">Di cosa ci occupiamo?</h1>
-                <h2 style="z-index: 99;" class="text-white text-3xl mt-12">La nostra azienda si pone l'obbiettivo di ricercare per i voi, i nostri clienti, le migliori soluzioni per le vostre vacanze!</h2>
+                <h1 style="z-index: 20;" class="text-white text-9xl mt-12">Di cosa ci occupiamo?</h1>
+                <h2 style="z-index: 20;" class="text-white text-3xl mt-12">La nostra azienda si pone l'obbiettivo di ricercare per i voi, i nostri clienti, le migliori soluzioni per le vostre vacanze!</h2>
                 <div class="black-layer"></div>
             </div>
         </section>
         <section>
-            <div class="p-5" style="background-color: #FDEDFA;">
+            <div class="p-5" style="background-color: #f7daf2;">
             <h1 style="font-style: italic;" class="text-center text-6xl mt-12">I nostri servizi!</h1>
 
             <div class="mt-12">
@@ -84,7 +84,6 @@ export default {
                     </li>
                     <li>Pagamenti sicuri!</li>     
                 </ul>
-
             </div>
             </div>
         </section>
