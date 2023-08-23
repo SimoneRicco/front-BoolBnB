@@ -4,7 +4,7 @@ export default {};
 
 <template>
   <nav
-    class="bg-white dark:bg-gray-900 fixed w-full z-40 top-0 left-0 border-b border-gray-200 dark:border-gray-600"
+    class="bg-white dark:bg-gray-900 fixed w-full z-60 top-0 left-0 border-b border-gray-200 dark:border-gray-600"
   >
     <div
       class="text-2xl flex flex-wrap items-center justify-between mx-auto p-4"
