@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "./components/Home.vue";
 import AppAbout from "./components/partials/AppAbout.vue";
 import AppContacts from "./components/partials/AppContacts.vue";
+import AppSignUp from "./components/partials/AppSignUp.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: "/contacts",
       name: "contacts",
       component: AppContacts,
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: AppSignUp,
     },
   ],
 });
