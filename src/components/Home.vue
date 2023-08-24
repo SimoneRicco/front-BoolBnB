@@ -243,7 +243,7 @@ export default {};
   </section>
 </template>
 
-<style>
+<style scoped>
 
 section{
   background-color: #f7daf2;
