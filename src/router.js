@@ -3,6 +3,7 @@ import Home from "./components/Home.vue";
 import AppAbout from "./components/partials/AppAbout.vue";
 import AppContacts from "./components/partials/AppContacts.vue";
 import App404 from "./components/App404.vue";
+import AppSignUp from "./components/partials/AppSignUp.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: "/:pathMatch(.*)*",
       name: "page404",
       component: App404,
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: AppSignUp,
     },
   ],
 });
