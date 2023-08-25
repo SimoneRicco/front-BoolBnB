@@ -6,6 +6,8 @@ import App404 from "./components/App404.vue";
 import AppSignUp from "./components/partials/AppSignUp.vue";
 import AppRegister from "./components/partials/AppRegister.vue";
 import AppLoadAppartment from "./components/partials/AppLoadAppartment.vue";
+import AppSearch from "./components/partials/AppSearch.vue";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +46,11 @@ const router = createRouter({
       path: "/loadApartment",
       name: "loadApartment",
       component: AppLoadAppartment,
+    },
+    { 
+      path: "/search",
+      name: "search",
+      component: AppSearch,
     },
   ],
 });

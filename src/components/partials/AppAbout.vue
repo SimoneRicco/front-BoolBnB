@@ -95,7 +95,7 @@ export default {
 
 
 
-<style>
+<style scoped>
 
 .black-layer{
     width: 100%;

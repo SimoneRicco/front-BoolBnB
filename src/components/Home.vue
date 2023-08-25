@@ -149,7 +149,11 @@ export default {
   <div id="indicators-carousel" class="relative w-full" data-carousel="static">
     <div class="opacity h-full w-full absolute z-30"></div>
     <h1 id="slogan">Frase ideata da Alessio</h1>
-    <button class="search text-white bg-red-300 hover:bg-red-400">Cerca la tua destinazione...</button>
+    <button class="search text-white bg-red-300 hover:bg-red-400">
+      <router-link :to="{ name: 'search' }">
+        Cerca la tua destinazione...
+      </router-link>
+    </button>
       <!-- Carousel wrapper -->
       <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
           <!-- Item 1 -->
@@ -262,20 +266,7 @@ export default {
         </ul>
       </nav>
       </div>
-  
 
-
-  
-
-  
-
-  
-
-  
-
-  
-
-      
     </div>
   </section>
 </template>
