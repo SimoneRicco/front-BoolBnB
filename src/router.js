@@ -4,6 +4,7 @@ import AppAbout from "./components/partials/AppAbout.vue";
 import AppContacts from "./components/partials/AppContacts.vue";
 import App404 from "./components/App404.vue";
 import AppSignUp from "./components/partials/AppSignUp.vue";
+import AppRegister from "./components/partials/AppRegister.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: "/signup",
       name: "signup",
       component: AppSignUp,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: AppRegister,
     },
   ],
 });
