@@ -46,7 +46,7 @@ export default {};
                   name="email"
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-black-900 sm:text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-300"
-                  placeholder="indirizzo@email.com"
+                  placeholder="nome@email.com"
                   required=""
                 />
               </div>
