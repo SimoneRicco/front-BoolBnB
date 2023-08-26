@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios';
 import { store } from '../../../store';
 
 
@@ -6,8 +7,23 @@ export default {
     data(){
       return{
         store,
+        arrImages:[],
       }
     },
+
+    methods:{
+    
+
+    getImages() {
+			axios.get(this.store.baseUrl + 'api/images').then(response => {
+				this.arrImages = response.data.results;
+			});
+		},
+  },
+
+  created() {
+    this.getImages();
+  },
 
 
 
@@ -25,7 +41,7 @@ export default {
 <template>
   <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img class="rounded-t-lg" :src="store.baseUrl + 'storage/uploads' + objApartment.image.id" alt="" />
+        <img v-for="image in arrImages" :key="image.id" class="rounded-t-lg" :src="store.baseUrl + 'storage/uploads/' + image.url" :alt="objApartment.title" />
     </a>
     <div class="p-5">
         <a href="#">
@@ -40,6 +56,8 @@ export default {
         </a>
     </div>
   </div>
+     
+
 </template>
 
 

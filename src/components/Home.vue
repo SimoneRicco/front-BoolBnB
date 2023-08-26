@@ -8,7 +8,7 @@ export default {
   data(){
     return{
       arrApartments:[],
-      arrImages:[],
+      // arrImages:[],
       currentPage: 1,
       nPages: 0,
       store,
@@ -39,16 +39,16 @@ export default {
     });
     },
 
-    getImages() {
-			axios.get(this.store.baseUrl + 'api/images').then(response => {
-				this.arrImages = response.data.results;
-			});
-		},
+    // getImages() {
+		// 	axios.get(this.store.baseUrl + 'api/images').then(response => {
+		// 		this.arrImages = response.data.results;
+		// 	});
+		// },
   },
 
   created() {
     this.getApartments();
-    this.getImages();
+    // this.getImages();
   },
 
   watch: {
@@ -227,10 +227,8 @@ export default {
 
        
         <ApartmentCardVue v-for="apartment in arrApartments" :key="apartment.id" :objApartment="apartment"/>
-       
-        <!-- <ul>
-          <li v-for="image in arrImages" :key="image.id" :objImage="image">{{ image.url }} </li>
-        </ul> -->
+
+      
 
       <!-- <nav class="mx-3">
 		  <ul class="pagination">
