@@ -8,6 +8,7 @@ export default {
   data(){
     return{
       arrApartments:[],
+      arrImages:[],
       currentPage: 1,
       nPages: 0,
       store,
@@ -36,11 +37,18 @@ export default {
       this.arrApartments = response.data.data;
 			this.nPages = response.data.last_page;
     });
-    }
+    },
+
+    getImages() {
+			axios.get(this.store.baseUrl + 'api/images').then(response => {
+				this.arrImages = response.data.results;
+			});
+		},
   },
 
   created() {
     this.getApartments();
+    this.getImages();
   },
 
   watch: {
@@ -217,9 +225,12 @@ export default {
     </div>
     <div class="mt-12 flex gap-5 w-full flex-wrap">
 
-      <div v-for="apartment in arrApartments" :key="apartment.name">
-        <ApartmentCardVue :objApartment="apartment"/>
-      </div>
+       
+        <ApartmentCardVue v-for="apartment in arrApartments" :key="apartment.id" :objApartment="apartment"/>
+       
+        <!-- <ul>
+          <li v-for="image in arrImages" :key="image.id" :objImage="image">{{ image.url }} </li>
+        </ul> -->
 
       <!-- <nav class="mx-3">
 		  <ul class="pagination">

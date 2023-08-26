@@ -1,6 +1,16 @@
 <script>
+import { store } from '../../../store';
+
 
 export default {
+    data(){
+      return{
+        store,
+      }
+    },
+
+
+
     props: {
       objApartment: Object,
       required: true,
@@ -15,7 +25,7 @@ export default {
 <template>
   <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img class="rounded-t-lg" src="https://fastly.picsum.photos/id/397/4475/2984.jpg?hmac=_PEWxhdxVnCU15wD6E-blJDbpMVH17QQVV0JYMZnkjc" alt="" />
+        <img class="rounded-t-lg" :src="store.baseUrl + 'storage/uploads' + objApartment.image.id" alt="" />
     </a>
     <div class="p-5">
         <a href="#">
