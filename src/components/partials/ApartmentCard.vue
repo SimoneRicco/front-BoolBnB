@@ -22,7 +22,7 @@ export default {
      /* TODO bisogna prendere solo quelle col booleano 1 */
     cardGenerator(a) {
       for(let i = 0; i < this.arrImages.length; i++ ) {    
-        if( a  == this.arrImages[i].apartment_id) {
+        if( a  == this.arrImages[i].apartment_id && this.arrImages[i].cover_image == 1) {
           return this.arrImages[i].url
         };
       };
