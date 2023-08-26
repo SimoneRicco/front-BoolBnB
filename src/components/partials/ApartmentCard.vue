@@ -19,10 +19,24 @@ export default {
 				this.arrImages = response.data.results;
 			});
 		},
+     /* TODO bisogna prendere solo quelle col booleano 1 */
+    cardGenerator(a) {
+      for(let i = 0; i < this.arrImages.length; i++ ) {    
+        if( a  == this.arrImages[i].apartment_id) {
+          return this.arrImages[i].url
+        };
+      };
+    },
+
+    bella() {
+      return 'ciao'
+    }
   },
 
   created() {
     this.getImages();
+    this.cardGenerator();
+  
   },
 
 
@@ -40,9 +54,7 @@ export default {
 
 <template>
   <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <a href="#">
-        <img v-for="image in arrImages" :key="image.id" class="rounded-t-lg" :src="store.baseUrl + 'storage/uploads/' + image.url" :alt="objApartment.title" />
-    </a>
+    <img class="rounded-t-lg" :src="store.baseUrl + 'storage/uploads/' + cardGenerator(objApartment.id)" :alt="objApartment.title"/>
     <div class="p-5">
         <a href="#">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ objApartment.title }}</h5>
