@@ -23,7 +23,10 @@ export default {
     </div>
     <Footer />
   </div>
-  
 </template>
 
-<style></style>
+<style>
+main {
+  padding-top: 88px; /* altezza header */
+}
+</style>
