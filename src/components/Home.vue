@@ -311,7 +311,7 @@ section{
   text-align: center;
   position: absolute;
   top: 30%;
-  z-index: 40;
+  z-index: 30;
 }
 
 @media screen and (max-width: 750px){
