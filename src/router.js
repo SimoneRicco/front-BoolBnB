@@ -7,7 +7,7 @@ import AppSignUp from "./components/partials/AppSignUp.vue";
 import AppRegister from "./components/partials/AppRegister.vue";
 import AppLoadAppartment from "./components/partials/AppLoadAppartment.vue";
 import AppSearch from "./components/partials/AppSearch.vue";
-
+import AppShow from "./components/partials/AppShow.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -47,10 +47,15 @@ const router = createRouter({
       name: "loadApartment",
       component: AppLoadAppartment,
     },
-    { 
+    {
       path: "/search",
       name: "search",
       component: AppSearch,
+    },
+    {
+      path: "/apartments/:slug",
+      name: "apartments.show",
+      component: AppShow,
     },
   ],
 });
