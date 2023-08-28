@@ -158,7 +158,7 @@ export default {
     <div class="opacity h-full w-full absolute z-30"></div>
     <div class="centered">
       <h1 id="slogan">Frase ideata da Alessio</h1>
-      <button class="search mt-3 text-white bg-red-300 hover:bg-red-400">
+      <button class="search mt-3 text-white bg-blue-500 hover:bg-blue-700">
         <router-link :to="{ name: 'search' }">
           Cerca la tua destinazione...
         </router-link>
@@ -284,15 +284,6 @@ export default {
 </template>
 
 <style scoped>
-
-
-
-
-
-
-section{
-  background-color: #f7daf2;
-}
 
 
 .search{
