@@ -61,7 +61,7 @@ export default {
 </script>
 
 <template>
-  <section class="flex justify-center">
+  <section id="filters" class="flex justify-center flex-wrap">
     <div class="container mt-24 p-5 flex flex-col justify-center w-32">
       <div class="flex justify-center">
       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -153,15 +153,18 @@ export default {
     </div>
   </section>
 
-  <section>
+  <section id="carousel">
   <div id="indicators-carousel" class="relative w-full" data-carousel="static">
     <div class="opacity h-full w-full absolute z-30"></div>
-    <h1 id="slogan">Frase ideata da Alessio</h1>
-    <button class="search text-white bg-red-300 hover:bg-red-400">
-      <router-link :to="{ name: 'search' }">
-        Cerca la tua destinazione...
-      </router-link>
-    </button>
+    <div class="centered">
+      <h1 id="slogan">Frase ideata da Alessio</h1>
+      <button class="search mt-3 text-white bg-blue-500 hover:bg-blue-700">
+        <router-link :to="{ name: 'search' }">
+          Cerca la tua destinazione...
+        </router-link>
+      </button>
+    </div>
+    
       <!-- Carousel wrapper -->
       <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
           <!-- Item 1 -->
@@ -282,34 +285,43 @@ export default {
 
 <style scoped>
 
-section{
-  background-color: #f7daf2;
-}
-
 
 .search{
   width: 15em;
   height: 3em;
-  position: absolute;
-  z-index: 40;
-  top: 45%;
-  left: 44%;
   border-radius: 20px;
 }
 
 #slogan{
   color: white;
-  text-align: center;
   font-size: 2.5em;
-  width: 15em;
-  height: 3em;
-  position: absolute;
-  z-index: 40;
-  top: 25%;
-  left: 35%;
 }
 
+.centered{
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  z-index: 30;
+}
 
+@media screen and (max-width: 750px){
+  #filters{
+    display: none;
+}
+
+#carousel{
+  margin-top: 5.5em;
+}
+
+#slogan{
+  font-size: 2em;
+}
+.search{
+  font-size: .8em;
+}
+
+}
 .opacity{
   background-color: rgba(0, 0, 0, 0.30);
 }
