@@ -32,6 +32,7 @@ export default {
 <template>
   <App404 v-if="is404" />
   <template v-else-if="apartment">
+    
     <h1 class="text-center text-5xl py-20">{{ apartment.title }}</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -63,13 +64,16 @@ export default {
           </tr>
         </tbody>
       </table>
+      
     </div>
-    <!-- Carousel start -->
-    <section>
+    
+  </template>
+
+<section>
       <div
         id="indicators-carousel"
         class="relative w-full"
-        data-carousel="static"
+        data-carousel="slide"
       >
         <div class="opacity h-full w-full absolute z-30"></div>
         <button class="search text-white bg-red-300 hover:bg-red-400"></button>
@@ -78,7 +82,7 @@ export default {
           <!-- Item 1 -->
           <template v-for="(item, index) in apartment.image" :key="index">
             <div
-              v-if="index == 0"
+              v-if="index === 0"
               class="hidden duration-700 ease-in-out"
               data-carousel-item="active"
             >
@@ -132,13 +136,6 @@ export default {
             aria-current="false"
             aria-label="Slide 4"
             data-carousel-slide-to="3"
-          ></button>
-          <button
-            type="button"
-            class="w-3 h-3 rounded-full"
-            aria-current="false"
-            aria-label="Slide 5"
-            data-carousel-slide-to="4"
           ></button>
         </div>
         <!-- Slider controls -->
@@ -196,7 +193,8 @@ export default {
         </button>
       </div>
     </section>
-  </template>
+
+    
 </template>
 
 <style></style>
