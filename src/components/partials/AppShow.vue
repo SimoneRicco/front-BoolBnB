@@ -84,15 +84,25 @@ onMounted(() => {
 <template>
   <App404 v-if="is404" />
   <div v-else-if="apartment">
-    <h1
+    <div class="flex justify-center items-baseline">
+      <h1
       style="font-style: italic"
       class="text-blue-800 text-center text-5xl py-20"
-    >
-      '{{ capitalized(apartment.title) }}'
-    </h1>
-    <div class="flex">
-      <section class="w-7/12">
-        <div class="container w-full">
+      >
+        '{{ capitalized(apartment.title) }}'
+      </h1>
+      <div v-if="apartment.sponsor_id != 0">
+        <svg  class="w-8 h-8 ml-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path fill="currentColor" d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"/>
+        <path fill="#fff" d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"/>
+        </svg>
+      </div>
+      
+    </div>
+    
+    <div>
+      <section class="w-full">
+        <div class="w-full">
           <div style="border: 2px solid black" class="carousel">
             <div
               class="highlighted"
@@ -111,8 +121,8 @@ onMounted(() => {
 
             <!-- div con le miniature -->
             <div class="thumbs">
-              <div class="controls">
-                <i style="cursor: pointer" @click="showPrevSlide">
+              
+                <i class="arrow-up" style="cursor: pointer;" @click="showPrevSlide">
                   <svg
                     class="w-8 h-8 text-gray-800 dark:text-white"
                     aria-hidden="true"
@@ -129,7 +139,7 @@ onMounted(() => {
                     />
                   </svg>
                 </i>
-                <i style="cursor: pointer" @click="showNextSlide">
+                <i class="arrow-down" style="cursor: pointer" @click="showNextSlide">
                   <svg
                     class="w-8 h-8 text-gray-800 dark:text-white"
                     aria-hidden="true"
@@ -146,7 +156,7 @@ onMounted(() => {
                     />
                   </svg>
                 </i>
-              </div>
+              
 
               <img
                 v-for="(image, index) in carouselImages"
@@ -161,20 +171,25 @@ onMounted(() => {
           </div>
         </div>
       </section>
+    </div>
+
+
+    <div class="flex">
       <section class="w-5/12 p-5">
-        <div class="text-3xl mb-24 flex items-baseline">
+        <h1 class="text-4xl mb-12">Informazioni sulla struttura:</h1>
+        <div class="text-3xl mb-12 flex items-baseline">
           <h2 class="text-blue-800">Numero di camere:</h2>
           <span class="ml-5">{{ apartment.rooms }}</span>
         </div>
-        <div class="text-3xl mb-24 flex items-baseline">
+        <div class="text-3xl mb-12 flex items-baseline">
           <h2 class="text-blue-800">Numero di bagni:</h2>
           <span class="ml-5">{{ apartment.bathrooms }}</span>
         </div>
-        <div class="text-3xl mb-24 flex items-baseline">
+        <div class="text-3xl mb-12 flex items-baseline">
           <h2 class="text-blue-800">Metri quadrati:</h2>
           <span class="ml-5">{{ apartment.square_meters }}</span>
         </div>
-        <div class="text-3xl mb-24 flex items-baseline">
+        <div class="text-3xl mb-12 flex items-baseline">
           <h2 class="text-blue-800">Disponibilità:</h2>
           <div class="ml-5" v-if="apartment.available === 1">
             <svg
@@ -272,220 +287,70 @@ onMounted(() => {
           </div>
         </div>
       </section>
+      <section class="w-7/12 mt-5">
+        <h1 class="text-4xl mb-12">Servizi della struttura:</h1>
+        <div class="p-5 flex flex-wrap gap-5">
+          <span v-for="(utility, index) in apartment.utilities" :key="index">
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'bathroom'">
+              <i class="fa-solid fa-toilet mr-2"></i>
+              <span class="ml-2">Bagno</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'parking'">
+              <i class="fa-solid fa-square-parking"></i>
+              <span class="ml-2">Parcheggio</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'kitchen'">
+              <i class="fa-solid fa-sink"></i>
+              <span class="ml-2">Cucina</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'washing machine'">
+              <i class="fa-solid fa-soap"></i>
+              <span class="ml-2">Lavatrice</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'balcony'">
+              <i class="fa-solid fa-person-through-window"></i>
+              <span class="ml-2">Balcone</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'garden'">
+              <i class="fa-brands fa-pagelines"></i>
+              <span class="ml-2">Giardino</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'bar'">
+              <i class="fa-solid fa-martini-glass-citrus"></i>
+              <span class="ml-2">Bar</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'room service'">
+              <i class="fa-solid fa-bell-concierge"></i>
+              <span class="ml-2">Servizio in camera</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'pool'">
+              <i class="fa-solid fa-water-ladder"></i>
+              <span class="ml-2">Piscina</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'spa'">
+              <i class="fa-solid fa-spray-can-sparkles"></i>
+              <span class="ml-2">Spa</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'gym'">
+              <i class="fa-solid fa-dumbbell"></i>
+              <span class="ml-2">Palestra</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'car-rent'">
+              <i class="fa-solid fa-car-side"></i>
+              <span class="ml-2">Noleggio auto</span>
+            </div>
+            <div class="bg-blue-100 text-blue-800 text-2xl font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-blue-900 dark:text-blue-300" v-if="utility.name === 'WiFi'">
+              <i class="fa-solid fa-wifi"></i>
+              <span class="ml-2">Wi-fi</span>
+            </div>
+          </span>
+        </div>
+      </section>
     </div>
   </div>
 
-  <div id="accordion-open" data-accordion="open">
-    <h2 id="accordion-open-heading-1">
-      <button
-        type="button"
-        class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-        data-accordion-target="#accordion-open-body-1"
-        aria-expanded="true"
-        aria-controls="accordion-open-body-1"
-      >
-        <span class="flex items-center"
-          ><svg
-            class="w-5 h-5 mr-2 shrink-0"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          What is Flowbite?</span
-        >
-        <svg
-          data-accordion-icon
-          class="w-3 h-3 rotate-180 shrink-0"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5 5 1 1 5"
-          />
-        </svg>
-      </button>
-    </h2>
-    <div
-      id="accordion-open-body-1"
-      class="hidden"
-      aria-labelledby="accordion-open-heading-1"
-    >
-      <div
-        class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900"
-      >
-        <p class="mb-2 text-gray-500 dark:text-gray-400">
-          Flowbite is an open-source library of interactive components built on
-          top of Tailwind CSS including buttons, dropdowns, modals, navbars, and
-          more.
-        </p>
-        <p class="text-gray-500 dark:text-gray-400">
-          Check out this guide to learn how to
-          <a
-            href="/docs/getting-started/introduction/"
-            class="text-blue-600 dark:text-blue-500 hover:underline"
-            >get started</a
-          >
-          and start developing websites even faster with components on top of
-          Tailwind CSS.
-        </p>
-      </div>
-    </div>
-    <h2 id="accordion-open-heading-2">
-      <button
-        type="button"
-        class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-        data-accordion-target="#accordion-open-body-2"
-        aria-expanded="false"
-        aria-controls="accordion-open-body-2"
-      >
-        <span class="flex items-center"
-          ><svg
-            class="w-5 h-5 mr-2 shrink-0"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-              clip-rule="evenodd"
-            ></path></svg
-          >Is there a Figma file available?</span
-        >
-        <svg
-          data-accordion-icon
-          class="w-3 h-3 rotate-180 shrink-0"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5 5 1 1 5"
-          />
-        </svg>
-      </button>
-    </h2>
-    <div
-      id="accordion-open-body-2"
-      class="hidden"
-      aria-labelledby="accordion-open-heading-2"
-    >
-      <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-        <p class="mb-2 text-gray-500 dark:text-gray-400">
-          Flowbite is first conceptualized and designed using the Figma software
-          so everything you see in the library has a design equivalent in our
-          Figma file.
-        </p>
-        <p class="text-gray-500 dark:text-gray-400">
-          Check out the
-          <a
-            href="https://flowbite.com/figma/"
-            class="text-blue-600 dark:text-blue-500 hover:underline"
-            >Figma design system</a
-          >
-          based on the utility classes from Tailwind CSS and components from
-          Flowbite.
-        </p>
-      </div>
-    </div>
-    <h2 id="accordion-open-heading-3">
-      <button
-        type="button"
-        class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-        data-accordion-target="#accordion-open-body-3"
-        aria-expanded="false"
-        aria-controls="accordion-open-body-3"
-      >
-        <span class="flex items-center"
-          ><svg
-            class="w-5 h-5 mr-2 shrink-0"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          What are the differences between Flowbite and Tailwind UI?</span
-        >
-        <svg
-          data-accordion-icon
-          class="w-3 h-3 rotate-180 shrink-0"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5 5 1 1 5"
-          />
-        </svg>
-      </button>
-    </h2>
-    <div
-      id="accordion-open-body-3"
-      class="hidden"
-      aria-labelledby="accordion-open-heading-3"
-    >
-      <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-        <p class="mb-2 text-gray-500 dark:text-gray-400">
-          The main difference is that the core components from Flowbite are open
-          source under the MIT license, whereas Tailwind UI is a paid product.
-          Another difference is that Flowbite relies on smaller and standalone
-          components, whereas Tailwind UI offers sections of pages.
-        </p>
-        <p class="mb-2 text-gray-500 dark:text-gray-400">
-          However, we actually recommend using both Flowbite, Flowbite Pro, and
-          even Tailwind UI as there is no technical reason stopping you from
-          using the best of two worlds.
-        </p>
-        <p class="mb-2 text-gray-500 dark:text-gray-400">
-          Learn more about these technologies:
-        </p>
-        <ul class="pl-5 text-gray-500 list-disc dark:text-gray-400">
-          <li>
-            <a
-              href="https://flowbite.com/pro/"
-              class="text-blue-600 dark:text-blue-500 hover:underline"
-              >Flowbite Pro</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://tailwindui.com/"
-              rel="nofollow"
-              class="text-blue-600 dark:text-blue-500 hover:underline"
-              >Tailwind UI</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+          
+  
 </template>
 
 <style scoped>
@@ -581,7 +446,7 @@ onMounted(() => {
   display: block;
 }
 
-.carousel .controls {
+/* .carousel .controls {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -592,7 +457,30 @@ onMounted(() => {
   transform: translateX(-50%);
   color: white;
   font-size: 2.5rem;
+} */
+
+.arrow-up{
   z-index: 9;
+  position: absolute;
+  top: 30px;
+  left: 45%
+}
+
+
+.arrow-down{
+  z-index: 9;
+  position: absolute;
+  bottom: 30px;
+  left: 45%
+}
+
+@media screen and (max-width: 900px) {
+  .arrow-up{
+    display: none;
+  }
+  .arrow-down{
+    display: none;
+  }
 }
 
 .thumb {
@@ -630,4 +518,7 @@ onMounted(() => {
 .description .active {
   display: block;
 }
+
+
+
 </style>
