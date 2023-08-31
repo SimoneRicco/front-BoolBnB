@@ -8,11 +8,13 @@ export default {
     data(){
         return {
             Searchtext: "",
-            store,
+            rooms: null,
+            beds: null,
             arrApartments:[],
             arrAddresses:[],
-            // currentPage: 1,
-            // nPages: 0,
+            currentPage: 1,
+            nPages: 0,
+            store,
         }
     },
 
@@ -22,21 +24,21 @@ export default {
     },
     
     methods:{
-        // changePage(page){
-        //     this.currentPage = page;
-        //     this.getApartments();
-        // },
+        changePage(page){
+            this.currentPage = page;
+            this.getApartments();
+        },
 
         getApartments(){
         axios.get(this.store.baseUrl + 'api/apartments' , {
         params: {
             q: this.Searchtext,
-            // page: this.currentPage,
+            page: this.currentPage,
         }
         })
         .then(response => {
                 this.arrApartments = response.data.results.data;
-                // this.nPages = response.data.last_page;
+                this.nPages = response.data.results.last_page;
         });
         },
 
@@ -52,19 +54,12 @@ export default {
     this.getApartments();
     },
 
-    // watch: {
-	// 	currentPage(){
-	// 		this.getApartments();
-	// 	},
-	// },
-    // computed:{
-    //     filterApartments() {
-    //         return this.arrApartments.filter((apartments) => {
-    //             return apartments.title.toLowerCase().includes(this.Searchtext.toLowerCase());
-
-    //         })
-    //     },
-    // },
+    watch: {
+		currentPage(){
+			this.getApartments();
+		},
+	},
+    
 
 
     mounted() {
@@ -106,23 +101,23 @@ export default {
                 
                 <div>
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di stanze:</h3> 
-                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select v-model="this.rooms" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>0</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
                 </select>
                 </div>
 
                 <div>
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di letti:</h3> 
-                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select v-model="this.beds" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>0</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
                 </select>
                 </div>
 
@@ -609,18 +604,40 @@ export default {
         </div>
 
 
-        <div class="text-center mt-24">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cerca &#128269;</button>
-        </div>
+        
 
-        <section>
+        
+        
+        </form>
+    </section>
+    <section class="mt-5">
             <div v-if="Searchtext == ''">
             </div>
-            <div v-else>
+            <div class="flex gap-5 justify-center" v-else>
                 <ApartmentCardVue  v-for="apartment in arrApartments" :key="apartment.id" :objApartment="apartment" />
             </div>
-        </section>
-        </form>
+            <div class="mt-5 w-full flex justify-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="inline-flex -space-x-px text-sm">
+                    <li >
+                    <a :class="{disabled: currentPage == 1}"  @click="currentPage--" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                    </li>
+                    
+                    <li v-for="page in nPages"
+                        :key="page"
+                        class="page-item"
+                        :class="{ active: page == currentPage }">
+                    <a @click="currentPage = page" href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {{ page }}
+                    </a>
+                    </li>
+                    
+                    <li >
+                    <a :class="{disabled: currentPage == nPages}" @click="currentPage++" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                    </li>
+                    </ul>
+                </nav>
+            </div>
     </section>
 </template>
 

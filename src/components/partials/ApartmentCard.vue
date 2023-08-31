@@ -128,8 +128,8 @@ export default {
           />
         </svg>
       </div>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        <!-- {{ objApartment.address.address }} -->
+      <p class="mt-1 mb-2 font-normal text-gray-700 dark:text-gray-400">
+        {{ objApartment.address.address }}
       </p>
       <p class="mb-3">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt ut
