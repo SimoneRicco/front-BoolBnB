@@ -8,7 +8,6 @@ export default {
   data(){
     return{
       arrApartments:[],
-      // arrImages:[],
       currentPage: 1,
       nPages: 0,
       store,
@@ -34,8 +33,8 @@ export default {
       }
     })
     .then(response => {
-      this.arrApartments = response.data.data;
-			this.nPages = response.data.last_page;
+      this.arrApartments = response.data.results.data;
+			this.nPages = response.data.results.last_page;
     });
     },
 
@@ -61,7 +60,7 @@ export default {
 </script>
 
 <template>
-  <section id="filters" class="flex justify-center flex-wrap">
+  <!-- <section id="filters" class="flex justify-center flex-wrap">
     <div class="container mt-24 p-5 flex flex-col justify-center w-32">
       <div class="flex justify-center">
       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -151,7 +150,7 @@ export default {
       </div>
       <div class="flex justify-center mt-3">Filtro 1</div>
     </div>
-  </section>
+  </section> -->
 
   <section id="carousel">
   <div id="indicators-carousel" class="relative w-full" data-carousel="static">

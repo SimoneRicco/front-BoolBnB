@@ -243,7 +243,7 @@ export default {
             </svg>
           </div>
         </div>
-        <div class="text-3xl flex items-baseline">
+        <!-- <div class="text-3xl flex items-baseline">
           <h2 class="text-blue-800">Punteggio:</h2>
           <div class="flex items-center ml-5">
             <svg
@@ -302,7 +302,7 @@ export default {
               />
             </svg>
           </div>
-        </div>
+        </div> -->
       </section>
       <section class="w-7/12 mt-5">
         <h1 class="text-4xl mb-12">Servizi della struttura:</h1>
