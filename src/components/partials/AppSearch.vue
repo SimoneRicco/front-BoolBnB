@@ -8,13 +8,16 @@ export default {
     data(){
         return {
             Searchtext: "",
-            rooms: null,
-            beds: null,
+            filterRooms: null,
+            filterBeds: null,
+            radius: 20,
             arrApartments:[],
             arrAddresses:[],
             currentPage: 1,
             nPages: 0,
             store,
+            min: 1,
+            max: 20,
         }
     },
 
@@ -33,6 +36,8 @@ export default {
         axios.get(this.store.baseUrl + 'api/apartments' , {
         params: {
             q: this.Searchtext,
+            rooms: this.filterRooms,
+            beds: this.filterBeds,
             page: this.currentPage,
         }
         })
@@ -41,18 +46,9 @@ export default {
                 this.nPages = response.data.results.last_page;
         });
         },
-
-        getAddresses() {
-			axios.get(this.store.baseUrl + 'api/addresses').then(response => {
-				this.arrAddresses = response.data.results;
-			});
-		},
     },
 
-    created() {
-    this.getAddresses();
-    this.getApartments();
-    },
+    
 
     watch: {
 		currentPage(){
@@ -101,7 +97,7 @@ export default {
                 
                 <div>
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di stanze:</h3> 
-                <select v-model="this.rooms" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select v-model="this.filterRooms" @change="getApartments()"  id="filterRooms" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -112,7 +108,7 @@ export default {
 
                 <div>
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di letti:</h3> 
-                <select v-model="this.beds" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select v-model="this.filterBeds" @change="getApartments()" id="filterBeds" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -611,10 +607,11 @@ export default {
         </form>
     </section>
     <section class="mt-5">
-            <div v-if="Searchtext == ''">
-            </div>
-            <div class="flex gap-5 justify-center" v-else>
-                <ApartmentCardVue  v-for="apartment in arrApartments" :key="apartment.id" :objApartment="apartment" />
+            <!-- <div v-if="Searchtext == ''">
+            </div> -->
+            
+            <div  class="flex flex-wrap gap-5 justify-center">
+                <ApartmentCardVue   v-for="apartment in arrApartments" :key="apartment.id" :objApartment="apartment" />
             </div>
             <div class="mt-5 w-full flex justify-center">
                 <nav aria-label="Page navigation example">
