@@ -12,7 +12,7 @@ export default {
             filterBeds: null,
             radius: 20,
             arrApartments:[],
-            arrAddresses:[],
+            arrUtilities:[],
             currentPage: 1,
             nPages: 0,
             store,
@@ -46,9 +46,17 @@ export default {
                 this.nPages = response.data.results.last_page;
         });
         },
+
+        getUtilities() {
+			axios.get(this.store.baseUrl + 'api/utilities').then(response => {
+				this.arrUtilities = response.data.results;
+			});
+		},
     },
 
-    
+    created(){
+        this.getUtilities();
+    },
 
     watch: {
 		currentPage(){
