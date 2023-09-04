@@ -39,15 +39,18 @@ export default {
             q: this.Searchtext,
             rooms: this.filterRooms,
             beds: this.filterBeds,
-            page: this.currentPage,
             utilities: this.filterUtilities,
+            page: this.currentPage,
         }
         })
         .then(response => {
                 this.arrApartments = response.data.results.data;
                 this.nPages = response.data.results.last_page;
+                // this.Searchtext = "";
         });
         },
+
+        
 
         getUtilities() {
 			axios.get(this.store.baseUrl + 'api/utilities').then(response => {
@@ -95,8 +98,8 @@ export default {
     </section>
     <section class="p-12" style="border-top: 3px solid #f7daf2; border-bottom: 3px solid #f7daf2;">
         <h1 class="text-4xl">Cerca per:</h1>
-        <form class="mt-5"  method="GET">
-                <div>
+        <form class="mt-5"  method="GET" >
+                
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Città o indirizzo:</h3> 
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div class="relative">
@@ -105,15 +108,15 @@ export default {
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input v-model="this.Searchtext" type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search an Appartment...">
+                        <input  v-model="this.Searchtext" type="text" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search an Appartment...">
                         
                     </div>
-                </div>
+                
             <div class="grid gap-6 mb-6 md:grid-cols-2 mt-12">
                 
                 <div>
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di stanze:</h3> 
-                <select v-model="this.filterRooms"   id="filterRooms" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select @change="getApartments()" v-model="this.filterRooms"   id="filterRooms" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -124,7 +127,7 @@ export default {
 
                 <div>
                     <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di letti:</h3> 
-                <select v-model="this.filterBeds"  id="filterBeds" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select @change="getApartments()" v-model="this.filterBeds"  id="filterBeds" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -211,7 +214,7 @@ export default {
                             class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
                         >
                             <input
-                            
+                            @change="getApartments()"
                             v-model="this.filterUtilities"
                             id="utility"
                             type="checkbox"
@@ -228,16 +231,8 @@ export default {
                     </ul>
                     </div>
                     </div>
-                    <button  type="button" @click.prevent @click="getApartments()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Search</button>
-
-
-        </div>
-
-
-        
-
-        
-        
+                    <button type="button" @click="getApartments()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>
+                </div>
         </form>
     </section>
     <section class="mt-5">
