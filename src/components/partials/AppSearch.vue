@@ -18,6 +18,7 @@ export default {
             store,
             min: 1,
             max: 20,
+            filterUtilities:[],
         }
     },
 
@@ -39,6 +40,7 @@ export default {
             rooms: this.filterRooms,
             beds: this.filterBeds,
             page: this.currentPage,
+            utilities: [],
         }
         })
         .then(response => {
@@ -198,214 +200,27 @@ export default {
                         class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownSearchButton"
                     >
-                        <li>
+                        <li v-for="utility in arrUtilities" :key="utility.id">
                         <div
                             class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
                         >
                             <input
-                            id="checkbox-item-11"
+                            v-model="this.filterUtilities"
+                            id="utility"
                             type="checkbox"
-                            value=""
+                            :value="utility.name"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                             />
                             <label
-                            for="checkbox-item-11"
+                            for="utility"
                             class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                            >Parcheggio</label
+                            >{{ utility.name }}</label
                             >
                         </div>
                         </li>
-                        <li>
-                        <div
-                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                        >
-                            <input
-                            checked
-                            id="checkbox-item-12"
-                            type="checkbox"
-                            value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                            />
-                            <label
-                            for="checkbox-item-12"
-                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                            >Cucina</label
-                            >
-                        </div>
-                        </li>
-                        <li>
-                        <div
-                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                        >
-                            <input
-                            id="checkbox-item-13"
-                            type="checkbox"
-                            value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                            />
-                            <label
-                            for="checkbox-item-13"
-                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                            >Lavatrice</label
-                            >
-                        </div>
-                        </li>
-                        <li>
-                        <div
-                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                        >
-                            <input
-                            id="checkbox-item-14"
-                            type="checkbox"
-                            value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                            />
-                            <label
-                            for="checkbox-item-14"
-                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                            >Balcone</label
-                            >
-                        </div>
-                        </li>
-                        <li>
-                        <div
-                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                        >
-                            <input
-                            id="checkbox-item-15"
-                            type="checkbox"
-                            value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                            />
-                            <label
-                            for="checkbox-item-15"
-                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                            >Giardino</label
-                            >
-                        </div>
-                        </li>
-                        <li>
-                        <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-16"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-16"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Bar</label
-                        >
+                    </ul>
                     </div>
-                    </li>
-                    <li>
-                    <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-17"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-17"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Servizio in camera</label
-                        >
                     </div>
-                    </li>
-                    <li>
-                    <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-17"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-17"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Piscina</label
-                        >
-                    </div>
-                    </li>
-                    <li>
-                    <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-17"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-17"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Spa</label
-                        >
-                    </div>
-                    </li>
-                    <li>
-                    <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-17"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-17"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Palestra</label
-                        >
-                    </div>
-                    </li>
-                    <li>
-                    <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-17"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-17"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Car-rent</label
-                        >
-                    </div>
-                    </li>
-                    <li>
-                    <div
-                        class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                    >
-                        <input
-                        id="checkbox-item-17"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        />
-                        <label
-                        for="checkbox-item-17"
-                        class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                        >Wi-fi</label
-                        >
-                    </div>
-                    </li>
-                </ul>
-                </div>
-                </div>
             
 
             <!-- <div>
