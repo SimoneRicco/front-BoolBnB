@@ -1,5 +1,82 @@
 <script>
-export default {};
+import axios from "axios";
+import { store } from "../../../store";
+
+export default {
+  data() {
+    return {
+      store,
+      name: "",
+      last_name: "",
+      email: "",
+      message: "",
+      apartment_id: "",
+      apartments: [],
+      showSuccess: false,
+      isSending: false,
+      hasError: false,
+    };
+  },
+  methods: {
+        sendLead() {
+      this.isSending = true;
+      console.log("Selected Apartment ID:", this.apartment_id);
+
+      // Verifica se l'utente ha selezionato un appartamento
+      if (this.apartment_id) {
+        axios
+          .post(this.store.baseUrl + "api/messages", {
+            name: this.name,
+            last_name: this.last_name,
+            email: this.email,
+            message: this.message,
+            apartment_id: this.apartment_id,
+          })
+          .then((response) => {
+            this.isSending = false;
+
+            if (response.data.success) {
+              this.showSuccess = true;
+              this.resetForm(); // Ripulisci il form in caso di successo
+            } else {
+              this.hasError = true;
+              this.resetForm(); // Ripulisci il form anche in caso di errore
+            }
+          })
+          .catch((error) => {
+            console.error("Errore durante la richiesta Axios:", error.response.data);
+            this.isSending = false;
+            this.hasError = true;
+            this.resetForm(); // Ripulisci il form in caso di errore
+          });
+      } else {
+        console.error("Nessun appartamento selezionato");
+        this.isSending = false;
+        this.hasError = true;
+        this.resetForm(); // Ripulisci il form in caso di errore
+      }
+    },
+    resetForm() {
+      this.name = "";
+      this.last_name = "";
+      this.email = "";
+      this.message = "";
+      this.apartment_id = "";
+    },
+    getApartments() {
+      axios
+        .get(this.store.baseUrl + "api/apartments/")
+        .then((response) => {
+          this.apartments = response.data.results.data;
+          console.log(this.apartments);
+        })
+        .catch(() => (this.is404 = true));
+    },
+  },
+  created() {
+    this.getApartments();
+  },
+};
 </script>
 
 <template>
@@ -22,6 +99,144 @@ export default {};
     <h1 class="text-3xl my-3.5 text-center">
       Iscriviti alla nostra newsletter
     </h1>
+
+    <div v-if="hasError" class="m-4">
+    Error in form submission!
+    <button
+      type="button"
+      class="close"
+      data-dismiss="alert"
+      aria-label="Close"
+      @click="hasError = false"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div
+    v-if="showSuccess"
+    class="bg-green-100 text-green-600 border border-green-600 py-2 px-4 rounded mb-4"
+  >
+    Message sent successfully!
+    <button
+      type="button"
+      class="close"
+      data-dismiss="alert"
+      aria-label="Close"
+      @click="showSuccess = false"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
+    <section class="m-5 p-4 dark:text-gray-50 row-span-3">
+      <div class="p-5">
+        <form
+          @submit.prevent="sendLead"
+          novalidate
+          class="container flex flex-col mx-auto space-y-12"
+        >
+          <fieldset
+            class="bg-blue-800 grid grid-cols-4 gap-4 p-6 rounded-md shadow-sm dark:bg-gray-900"
+          >
+            <h1 class="text-3xl font-bold text-white mx-5">Contact Us</h1>
+          </fieldset>
+
+          <fieldset
+            class="bg-blue-800 py-10 grid grid-cols-4 gap-4 px-6 rounded-md shadow-sm dark:bg-gray-900"
+          >
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+              <div class="col-span-full sm:col-span-6">
+                <label for="name" class="block text-sm text-white font-medium"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  class="form-input mt-1 block w-full rounded-md border-gray-300"
+                  id="name"
+                  v-model="name"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+              <div class="col-span-full sm:col-span-6">
+                <label for="last_name" class="block text-sm text-white font-medium"
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  class="form-input mt-1 block w-full rounded-md border-gray-300"
+                  id="last_name"
+                  v-model="last_name"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+              <div class="col-span-full sm:col-span-6">
+                <label for="email" class="block text-sm text-white font-medium"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-input mt-1 block w-full rounded-md border-gray-300"
+                  id="email"
+                  v-model="email"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+              <div class="col-span-full sm:col-span-6">
+                <label
+                  for="message"
+                  class="block text-sm text-white font-medium"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  class="form-textarea mt-1 block w-full rounded-md border-gray-300"
+                  rows="5"
+                  v-model="message"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+              <div class="col-span-full sm:col-span-6">
+                <label for="apartment_id" class="block text-sm text-white font-medium">Apartment</label>
+                <select v-model="apartment_id" class="form-select mt-1 block w-full rounded-md border-gray-300" id="apartment_id" name="apartment_id">
+                  <option value="">Select an apartment</option>
+                  <option v-for="apartment in apartments" :value="apartment.id" :key="apartment.id">{{ apartment.title }}</option>
+                </select>
+              </div>
+            </div>
+            
+          </fieldset>
+
+          <div
+            class="bg-blue-800 py-4 flex justify-center rounded-md shadow-sm dark:bg-gray-900"
+          >
+            <button
+              type="submit"
+              class="text-white px-4 py-2 border rounded-md dark:border-gray-100"
+              :class="{ 'opacity-50 pointer-events-none': isSending }"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <div class="bg-contacts flex items-center justify-center">
+      <i
+        class="fa-solid fa-envelopes-bulk text-7xl md:text-9xl lg:text-[20rem] text-blue-800"
+      ></i>
+    </div>
+  </div>
+
     <section>
       <div
         class="border-solid border-2 border-dark-600 my-6 m-auto block max-w-md rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
@@ -182,6 +397,7 @@ export default {};
       </div>
     </div>
   </div>
+  
 </template>
 
 <style scoped></style>
