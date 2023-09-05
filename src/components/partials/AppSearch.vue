@@ -1,12 +1,16 @@
 <script>
+
 import axios from 'axios';
 import {store} from '../../../store';
 import { initFlowbite } from "flowbite";
 import ApartmentCardVue from './ApartmentCard.vue';
+import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import * as ttServices from "@tomtom-international/web-sdk-services";
 
 export default {
     data(){
         return {
+            results:[],
             Searchtext: "",
             filterRooms: null,
             filterBeds: null,
@@ -58,8 +62,81 @@ export default {
 			});
 		},
 
-        
-        
+        // tom tom
+        async getTom(){
+        try {
+            const response = await ttServices.services.geocode({
+                batchMode: 'async',
+                key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+                query: store.address,
+                countrySet: 'IT',
+                language: 'it-IT',
+            }).then( (response) => {
+                    
+                    const results = response.results;
+                    // console.log(results)
+                    
+                    // se abbiamo dei risultati ottenuti
+                    if (results.length)  {   
+
+                        const userAddressLower = store.address.toLowerCase();
+            
+                        for (const elem of results) {                          
+                                        
+                            const resultAddressLower = elem.address.freeformAddress.toLowerCase();
+            
+                            // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
+                            if (resultAddressLower.includes(userAddressLower)) {
+                                this.latitude = elem.position.lat;
+                                this.longitude = elem.position.lng;
+                                console.log(this.latitude, this.longitude)
+            
+                                break; 
+                            } 
+                        }                        
+                    } else {
+                        console.error('Nessun risultato trovato per l\'indirizzo fornito.');
+                    }
+                }
+            )
+        } catch (error) {
+            console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
+        }
+        },
+
+        autocomplete() {    
+                // Ottenimento dell'indirizzo dal campo input
+                const search = document.querySelector('#search');
+            
+                if( search.value ) {
+
+                    ttServices.services.geocode({
+                        batchMode: 'async',
+                        key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+                        query: search.value,
+                        countrySet: 'IT',
+                        language: 'it-IT',
+                    }).then(
+                        function (response) {
+                            
+                            const results = response.results;
+                            // console.log(results)                
+            
+                            // se abbiamo dei risultati ottenuti
+                            if (results.length)  {   
+            
+                                for (const elem of results) {
+                                    document.getElementById('datalistOptions').innerHTML += `
+                                    <option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>
+                                    `;}
+                            }
+                            
+                        }
+                    ).catch((error) => {
+                        console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
+                    });
+                }
+            } 
     },
 
     created(){
@@ -108,8 +185,12 @@ export default {
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input  v-model="this.Searchtext" type="text" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search an Appartment...">
-                        
+                            <!-- search -->
+                    <div class="col-xl-9 col-lg-9 col-md-7 col-12">
+                        <input class="form-control" id="search" name="search" type="search"  placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.Searchtext"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartments()">
+                        <datalist id="datalistOptions">                           
+                        </datalist>
+                    </div>
                     </div>
                 
             <div class="grid gap-6 mb-6 md:grid-cols-2 mt-12">
@@ -231,7 +312,7 @@ export default {
                     </ul>
                     </div>
                     </div>
-                    <button type="button" @click="getApartments()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>
+                    <button type="button" @click="getApartments()" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cerca</button>
                 </div>
         </form>
     </section>

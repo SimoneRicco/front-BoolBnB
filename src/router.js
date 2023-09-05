@@ -8,6 +8,7 @@ import AppRegister from "./components/partials/AppRegister.vue";
 import AppLoadAppartment from "./components/partials/AppLoadAppartment.vue";
 import AppSearch from "./components/partials/AppSearch.vue";
 import AppShow from "./components/partials/AppShow.vue";
+import AppAdvancedResearch from "./components/partials/AppAdvancedResearch.vue"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -56,6 +57,11 @@ const router = createRouter({
       path: "/apartments/:slug",
       name: "apartments.show",
       component: AppShow,
+    },
+    {
+      path: "/AdvancedSearch",
+      name: "search.advancedSearch",
+      component: AppAdvancedResearch,
     },
   ],
 });
