@@ -15,10 +15,12 @@ export default {
       showSuccess: false,
       isSending: false,
       hasError: false,
+      isLoading: false,
     };
   },
   methods: {
         sendLead() {
+      this.isLoading = true;
       this.isSending = true;
       console.log("Selected Apartment ID:", this.apartment_id);
 
@@ -130,112 +132,117 @@ export default {
   </div>
 
   <div class="grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
-    <section class="m-5 p-4 dark:text-gray-50 row-span-3">
-      <div class="p-5">
-        <form
-          @submit.prevent="sendLead"
-          novalidate
-          class="container flex flex-col mx-auto space-y-12"
-        >
-          <fieldset
-            class="bg-blue-800 grid grid-cols-4 gap-4 p-6 rounded-md shadow-sm dark:bg-gray-900"
-          >
-            <h1 class="text-3xl font-bold text-white mx-5">Contact Us</h1>
-          </fieldset>
-
-          <fieldset
-            class="bg-blue-800 py-10 grid grid-cols-4 gap-4 px-6 rounded-md shadow-sm dark:bg-gray-900"
-          >
-            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
-              <div class="col-span-full sm:col-span-6">
-                <label for="name" class="block text-sm text-white font-medium"
-                  >Name</label
-                >
-                <input
-                  type="text"
-                  class="form-input mt-1 block w-full rounded-md border-gray-300"
-                  id="name"
-                  v-model="name"
-                />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
-              <div class="col-span-full sm:col-span-6">
-                <label for="last_name" class="block text-sm text-white font-medium"
-                  >Last Name</label
-                >
-                <input
-                  type="text"
-                  class="form-input mt-1 block w-full rounded-md border-gray-300"
-                  id="last_name"
-                  v-model="last_name"
-                />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
-              <div class="col-span-full sm:col-span-6">
-                <label for="email" class="block text-sm text-white font-medium"
-                  >Email address</label
-                >
-                <input
-                  type="email"
-                  class="form-input mt-1 block w-full rounded-md border-gray-300"
-                  id="email"
-                  v-model="email"
-                />
-              </div>
-            </div>
-
-            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
-              <div class="col-span-full sm:col-span-6">
-                <label
-                  for="message"
-                  class="block text-sm text-white font-medium"
-                  >Message</label
-                >
-                <textarea
-                  id="message"
-                  class="form-textarea mt-1 block w-full rounded-md border-gray-300"
-                  rows="5"
-                  v-model="message"
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
-              <div class="col-span-full sm:col-span-6">
-                <label for="apartment_id" class="block text-sm text-white font-medium">Apartment</label>
-                <select v-model="apartment_id" class="form-select mt-1 block w-full rounded-md border-gray-300" id="apartment_id" name="apartment_id">
-                  <option value="">Select an apartment</option>
-                  <option v-for="apartment in apartments" :value="apartment.id" :key="apartment.id">{{ apartment.title }}</option>
-                </select>
-              </div>
-            </div>
-            
-          </fieldset>
-
-          <div
-            class="bg-blue-800 py-4 flex justify-center rounded-md shadow-sm dark:bg-gray-900"
-          >
-            <button
-              type="submit"
-              class="text-white px-4 py-2 border rounded-md dark:border-gray-100"
-              :class="{ 'opacity-50 pointer-events-none': isSending }"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+  <section class="m-5 p-4 dark:text-gray-50 row-span-3">
+    <div class="p-5">
+      <div v-if="isSending" class="loader">
+        <span></span>
       </div>
-    </section>
-    <div class="bg-contacts flex items-center justify-center">
-      <i
-        class="fa-solid fa-envelopes-bulk text-7xl md:text-9xl lg:text-[20rem] text-blue-800"
-      ></i>
+      <form
+        @submit.prevent="sendLead"
+        novalidate
+        class="container flex flex-col mx-auto space-y-12"
+        v-else
+      >
+        <fieldset
+          class="bg-blue-800 grid grid-cols-4 gap-4 p-6 rounded-md shadow-sm dark:bg-gray-900"
+        >
+          <h1 class="text-3xl font-bold text-white mx-5">Contact Us</h1>
+        </fieldset>
+
+        <fieldset
+          class="bg-blue-800 py-10 grid grid-cols-4 gap-4 px-6 rounded-md shadow-sm dark:bg-gray-900"
+        >
+          <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+            <div class="col-span-full sm:col-span-6">
+              <label for="name" class="block text-sm text-white font-medium"
+                >Name</label
+              >
+              <input
+                type="text"
+                class="form-input mt-1 block w-full rounded-md border-gray-300"
+                id="name"
+                v-model="name"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+            <div class="col-span-full sm:col-span-6">
+              <label for="last_name" class="block text-sm text-white font-medium"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                class="form-input mt-1 block w-full rounded-md border-gray-300"
+                id="last_name"
+                v-model="last_name"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+            <div class="col-span-full sm:col-span-6">
+              <label for="email" class="block text-sm text-white font-medium"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-input mt-1 block w-full rounded-md border-gray-300"
+                id="email"
+                v-model="email"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+            <div class="col-span-full sm:col-span-6">
+              <label
+                for="message"
+                class="block text-sm text-white font-medium"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                class="form-textarea mt-1 block w-full rounded-md border-gray-300"
+                rows="5"
+                v-model="message"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-6">
+            <div class="col-span-full sm:col-span-6">
+              <label for="apartment_id" class="block text-sm text-white font-medium">Apartment</label>
+              <select v-model="apartment_id" class="form-select mt-1 block w-full rounded-md border-gray-300" id="apartment_id" name="apartment_id">
+                <option value="">Select an apartment</option>
+                <option v-for="apartment in apartments" :value="apartment.id" :key="apartment.id">{{ apartment.title }}</option>
+              </select>
+            </div>
+          </div>
+          
+        </fieldset>
+
+        <div
+          class="bg-blue-800 py-4 flex justify-center rounded-md shadow-sm dark:bg-gray-900"
+        >
+          <button
+            type="submit"
+            class="text-white px-4 py-2 border rounded-md dark:border-gray-100"
+            :class="{ 'opacity-50 pointer-events-none': isSending }"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
+  </section>
+  <div class="bg-contacts flex items-center justify-center">
+    <i
+      class="fa-solid fa-envelopes-bulk text-7xl md:text-9xl lg:text-[20rem] text-blue-800"
+    ></i>
   </div>
+</div>
+
 
     <section>
       <div
@@ -400,4 +407,75 @@ export default {
   
 </template>
 
-<style scoped></style>
+<style scoped>
+.loader {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 25px 25px 75px rgba(0,0,0,0.55);
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loader::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  background: transparent;
+  border: 1px dashed#444;
+  border-radius: 50%;
+  box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25),
+  inset 5px 5px 35px rgba(0,0,0,0.25);
+}
+
+.loader::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px dashed#444;
+  box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25),
+  inset 5px 5px 35px rgba(0,0,0,0.25);
+}
+
+.loader span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  background: transparent;
+  transform-origin: top left;
+  animation: radar81 2s linear infinite;
+  border-top: 1px dashed #fff;
+}
+
+.loader span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: seagreen;
+  transform-origin: top left;
+  transform: rotate(-55deg);
+  filter: blur(30px) drop-shadow(20px 20px 20px seagreen);
+}
+
+@keyframes radar81 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
