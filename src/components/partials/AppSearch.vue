@@ -25,7 +25,7 @@ export default {
       filterAddresses: [],
       latitude: null,
       longitude: null,
-      distanceNumber: 5,
+      distanceNumber: 20,
       addressesDistanceOne: [],
       filteredApartment: [],
     };
@@ -162,6 +162,7 @@ export default {
     },
 
      radiusFilter(){
+        this.filteredApartment = []
         this.arrApartments.forEach(apartment => {
 
         
@@ -307,21 +308,15 @@ export default {
           </select>
         </div>
 
-        <div class="mt-12">
-          <label
-            for="first_name"
-            class="mb-4 text-xl font-semibold text-gray-900 dark:text-white block"
-            >Distanza Km: <span>0</span></label
-          >
-          <input
-            class="rounded-lg overflow-hidden appearance-none bg-gray-400 h-3 w-128"
-            type="range"
-            min="1"
-            max="100"
-            step="1"
-            value="0"
-          />
-        </div>
+       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+        <select v-model="this.distanceNumber" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>Choose a distance</option>
+        <option type="number" value="1">1</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        </select> 
 
         <div>
           <label
@@ -432,7 +427,7 @@ export default {
 
     <div class="flex flex-wrap gap-5 justify-center">
       <ApartmentCardVue
-        v-for="apartment in arrApartments"
+        v-for="apartment in filteredApartment"
         :key="apartment.id"
         :objApartment="apartment"
       />
