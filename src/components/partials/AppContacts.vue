@@ -1,83 +1,83 @@
 <script>
-import axios from "axios";
-import { store } from "../../../store";
+// import axios from "axios";
+// import { store } from "../../../store";
 
 export default {
-  data() {
-    return {
-      store,
-      name: "",
-      last_name: "",
-      email: "",
-      message: "",
-      apartment_id: "",
-      apartments: [],
-      showSuccess: false,
-      isSending: false,
-      hasError: false,
-      isLoading: false,
-    };
-  },
-  methods: {
-        sendLead() {
-      this.isLoading = true;
-      this.isSending = true;
-      console.log("Selected Apartment ID:", this.apartment_id);
+//   data() {
+//     return {
+//       store,
+//       name: "",
+//       last_name: "",
+//       email: "",
+//       message: "",
+//       apartment_id: "",
+//       apartments: [],
+//       showSuccess: false,
+//       isSending: false,
+//       hasError: false,
+//       isLoading: false,
+//     };
+//   },
+//   methods: {
+//         sendLead() {
+//       this.isLoading = true;
+//       this.isSending = true;
+//       console.log("Selected Apartment ID:", this.apartment_id);
 
-      // Verifica se l'utente ha selezionato un appartamento
-      if (this.apartment_id) {
-        axios
-          .post(this.store.baseUrl + "api/messages", {
-            name: this.name,
-            last_name: this.last_name,
-            email: this.email,
-            message: this.message,
-            apartment_id: this.apartment_id,
-          })
-          .then((response) => {
-            this.isSending = false;
+//       // Verifica se l'utente ha selezionato un appartamento
+//       if (this.apartment_id) {
+//         axios
+//           .post(this.store.baseUrl + "api/messages", {
+//             name: this.name,
+//             last_name: this.last_name,
+//             email: this.email,
+//             message: this.message,
+//             apartment_id: this.apartment_id,
+//           })
+//           .then((response) => {
+//             this.isSending = false;
 
-            if (response.data.success) {
-              this.showSuccess = true;
-              this.resetForm(); // Ripulisci il form in caso di successo
-            } else {
-              this.hasError = true;
-              this.resetForm(); // Ripulisci il form anche in caso di errore
-            }
-          })
-          .catch((error) => {
-            console.error("Errore durante la richiesta Axios:", error.response.data);
-            this.isSending = false;
-            this.hasError = true;
-            this.resetForm(); // Ripulisci il form in caso di errore
-          });
-      } else {
-        console.error("Nessun appartamento selezionato");
-        this.isSending = false;
-        this.hasError = true;
-        this.resetForm(); // Ripulisci il form in caso di errore
-      }
-    },
-    resetForm() {
-      this.name = "";
-      this.last_name = "";
-      this.email = "";
-      this.message = "";
-      this.apartment_id = "";
-    },
-    getApartments() {
-      axios
-        .get(this.store.baseUrl + "api/apartments/")
-        .then((response) => {
-          this.apartments = response.data.results.data;
-          console.log(this.apartments);
-        })
-        .catch(() => (this.is404 = true));
-    },
-  },
-  created() {
-    this.getApartments();
-  },
+//             if (response.data.success) {
+//               this.showSuccess = true;
+//               this.resetForm(); // Ripulisci il form in caso di successo
+//             } else {
+//               this.hasError = true;
+//               this.resetForm(); // Ripulisci il form anche in caso di errore
+//             }
+//           })
+//           .catch((error) => {
+//             console.error("Errore durante la richiesta Axios:", error.response.data);
+//             this.isSending = false;
+//             this.hasError = true;
+//             this.resetForm(); // Ripulisci il form in caso di errore
+//           });
+//       } else {
+//         console.error("Nessun appartamento selezionato");
+//         this.isSending = false;
+//         this.hasError = true;
+//         this.resetForm(); // Ripulisci il form in caso di errore
+//       }
+//     },
+//     resetForm() {
+//       this.name = "";
+//       this.last_name = "";
+//       this.email = "";
+//       this.message = "";
+//       this.apartment_id = "";
+//     },
+//     getApartments() {
+//       axios
+//         .get(this.store.baseUrl + "api/apartments/")
+//         .then((response) => {
+//           this.apartments = response.data.results.data;
+//           console.log(this.apartments);
+//         })
+//         .catch(() => (this.is404 = true));
+//     },
+//   },
+//   created() {
+//     this.getApartments();
+//   },
 };
 </script>
 
@@ -102,7 +102,7 @@ export default {
       Iscriviti alla nostra newsletter
     </h1>
 
-    <div v-if="hasError" class="m-4">
+    <!-- <div v-if="hasError" class="m-4">
     Error in form submission!
     <button
       type="button"
@@ -241,88 +241,8 @@ export default {
       class="fa-solid fa-envelopes-bulk text-7xl md:text-9xl lg:text-[20rem] text-blue-800"
     ></i>
   </div>
-</div>
+</div> -->
 
-
-    <section>
-      <div
-        class="border-solid border-2 border-dark-600 my-6 m-auto block max-w-md rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
-      >
-        <div
-          class="bg-cover contact bg-[url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80')]"
-        >
-          <form>
-            <div class="relative mb-6" data-te-input-wrapper-init>
-              <input
-                type="text"
-                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                id="exampleInput7"
-                placeholder="Nome"
-              />
-              <label
-                for="exampleInput7"
-                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                >Nome
-              </label>
-            </div>
-
-            <div class="relative mb-6" data-te-input-wrapper-init>
-              <input
-                type="email"
-                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                id="exampleInput8"
-                placeholder="Email"
-              />
-              <label
-                for="exampleInput8"
-                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                >Email
-              </label>
-            </div>
-
-            <div class="relative mb-6" data-te-input-wrapper-init>
-              <textarea
-                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                id="exampleFormControlTextarea13"
-                rows="3"
-                placeholder="Messaggio"
-              ></textarea>
-              <label
-                for="exampleFormControlTextarea13"
-                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                >Messaggio
-              </label>
-            </div>
-
-            <div
-              class="mb-6 flex min-h-[1.5rem] items-center justify-center pl-[1.5rem]"
-            >
-              <input
-                class="relative float-left -ml-[1.5rem] mr-[6px] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                type="checkbox"
-                value=""
-                id="exampleCheck10"
-              />
-              <label
-                class="inline-block pl-[0.15rem] hover:cursor-pointer"
-                for="exampleCheck10"
-              >
-                Ricevi una copia del messaggio
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-              data-te-ripple-init
-              data-te-ripple-color="light"
-            >
-              Invia
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
     <div class="w-screen flex flex-col w-fit content-center flex-wrap">
       <div class="w-1/2 flex justify-center items-center">
         <div class="left bg-red-300 p-4 my-6 rounded-3xl">
