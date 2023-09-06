@@ -1,376 +1,531 @@
 <script>
-
-import axios from 'axios';
-import {store} from '../../../store';
+import axios from "axios";
+import { store } from "../../../store";
 import { initFlowbite } from "flowbite";
-import ApartmentCardVue from './ApartmentCard.vue';
+import ApartmentCardVue from "./ApartmentCard.vue";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import * as ttServices from "@tomtom-international/web-sdk-services";
 
 export default {
-    data(){
-        return {
-            results:[],
-            Searchtext: "",
-            filterRooms: null,
-            filterBeds: null,
-            radius: 20,
-            arrApartments:[],
-            arrUtilities:[],
-            currentPage: 1,
-            nPages: 0,
-            store,
-            min: 1,
-            max: 20,
-            filterUtilities: [],
-        }
+  data() {
+    return {
+      results: [],
+      Searchtext: "",
+      filterRooms: null,
+      filterBeds: null,
+      radius: 20,
+      arrApartments: [],
+      arrUtilities: [],
+      currentPage: 1,
+      nPages: 0,
+      store,
+      min: 1,
+      max: 20,
+      filterUtilities: [],
+      filterAddresses: [],
+      latitude: 41.902697,
+      longitude: 12.496249,
+      distanceNumber: 3,
+    };
+  },
+
+  components: {
+    ApartmentCardVue,
+  },
+
+  methods: {
+    changePage(page) {
+      this.currentPage = page;
+      this.getApartments();
     },
 
-
-    components:{
-        ApartmentCardVue,
-    },
-    
-    methods:{
-        changePage(page){
-            this.currentPage = page;
-            this.getApartments();
-        },
-
-        getApartments(){
-        axios.get(this.store.baseUrl + 'api/apartments' , {
-        params: {
+    getApartments() {
+      axios
+        .get(this.store.baseUrl + "api/apartments", {
+          params: {
             q: this.Searchtext,
             rooms: this.filterRooms,
             beds: this.filterBeds,
             utilities: this.filterUtilities,
             page: this.currentPage,
-        }
+          },
         })
-        .then(response => {
-                this.arrApartments = response.data.results.data;
-                this.nPages = response.data.results.last_page;
-                // this.Searchtext = "";
+        .then((response) => {
+          this.arrApartments = response.data.results.data;
+          this.nPages = response.data.results.last_page;
+          // this.Searchtext = "";
         });
-        },
+    },
 
-        
+    getUtilities() {
+      axios.get(this.store.baseUrl + "api/utilities").then((response) => {
+        this.arrUtilities = response.data.results;
+      });
+    },
 
-        getUtilities() {
-			axios.get(this.store.baseUrl + 'api/utilities').then(response => {
-				this.arrUtilities = response.data.results;
-			});
-		},
+    // tom tom
+    async getTom() {
+      try {
+        const response = await ttServices.services
+          .geocode({
+            batchMode: "async",
+            key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+            query: store.address,
+            countrySet: "IT",
+            language: "it-IT",
+          })
+          .then((response) => {
+            const results = response.results;
+            // console.log(results)
 
-        // tom tom
-        async getTom(){
-        try {
-            const response = await ttServices.services.geocode({
-                batchMode: 'async',
-                key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-                query: store.address,
-                countrySet: 'IT',
-                language: 'it-IT',
-            }).then( (response) => {
-                    
-                    const results = response.results;
-                    // console.log(results)
-                    
-                    // se abbiamo dei risultati ottenuti
-                    if (results.length)  {   
+            // se abbiamo dei risultati ottenuti
+            if (results.length) {
+              const userAddressLower = store.address.toLowerCase();
 
-                        const userAddressLower = store.address.toLowerCase();
-            
-                        for (const elem of results) {                          
-                                        
-                            const resultAddressLower = elem.address.freeformAddress.toLowerCase();
-            
-                            // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
-                            if (resultAddressLower.includes(userAddressLower)) {
-                                this.latitude = elem.position.lat;
-                                this.longitude = elem.position.lng;
-                                console.log(this.latitude, this.longitude)
-            
-                                break; 
-                            } 
-                        }                        
-                    } else {
-                        console.error('Nessun risultato trovato per l\'indirizzo fornito.');
-                    }
+              for (const elem of results) {
+                const resultAddressLower =
+                  elem.address.freeformAddress.toLowerCase();
+
+                // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
+                if (resultAddressLower.includes(userAddressLower)) {
+                  this.latitude = elem.position.lat;
+                  this.longitude = elem.position.lng;
+                  console.log(this.latitude, this.longitude);
+
+                  break;
                 }
-            )
-        } catch (error) {
-            console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
-        }
-        },
+              }
+            } else {
+              console.error(
+                "Nessun risultato trovato per l'indirizzo fornito."
+              );
+            }
+          });
+      } catch (error) {
+        console.error(
+          "Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:",
+          error
+        );
+      }
+    },
 
-        autocomplete() {    
-                // Ottenimento dell'indirizzo dal campo input
-                const search = document.querySelector('#search');
-            
-                if( search.value ) {
+    autocomplete() {
+      // Ottenimento dell'indirizzo dal campo input
+      const search = document.querySelector("#search");
 
-                    ttServices.services.geocode({
-                        batchMode: 'async',
-                        key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-                        query: search.value,
-                        countrySet: 'IT',
-                        language: 'it-IT',
-                    }).then(
-                        function (response) {
-                            
-                            const results = response.results;
-                            // console.log(results)                
-            
-                            // se abbiamo dei risultati ottenuti
-                            if (results.length)  {   
-            
-                                for (const elem of results) {
-                                    document.getElementById('datalistOptions').innerHTML += `
+      if (search.value) {
+        ttServices.services
+          .geocode({
+            batchMode: "async",
+            key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+            query: search.value,
+            countrySet: "IT",
+            language: "it-IT",
+          })
+          .then(function (response) {
+            const results = response.results;
+            // console.log(results)
+
+            // se abbiamo dei risultati ottenuti
+            if (results.length) {
+              for (const elem of results) {
+                document.getElementById("datalistOptions").innerHTML += `
                                     <option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>
-                                    `;}
-                            }
-                            
-                        }
-                    ).catch((error) => {
-                        console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
-                    });
-                }
-            } 
+                                    `;
+              }
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:",
+              error
+            );
+          });
+      }
     },
 
-    created(){
-        this.getUtilities();
+    advancedSearchApartments() {
+        axios
+        .get(this.store.baseUrl + "api/addresses", {
+        //   params: {
+        //     latitude: this.latitude,
+        //     longitude: this.longitude,
+        //   },
+    //   axios
+    //     .get("http://127.0.0.1:8000/api/apartments", {
+    //       params: {
+    //         bed: this.bed,
+    //         room: this.room,
+    //         bathroom: this.bathroom,
+    //         price: this.price,
+    //         services: this.services,
+    //         type: this.types,
+    //       },
+        })
+        .then((response) => {
+          this.filterAddresses = response.data.results;
+          console.log("Addresses filtrati", this.filterAddresses);
+
+          if (this.latitude !== null || this.longitude !== null) {
+            const closestAddresses = [];
+            
+            this.filterAddresses.forEach((address) => {
+                if (address.latitude !== null || address.longitude !== null) {
+              const R = 6371; // raggio della Terra in km
+              const lat1 = this.latitude; //latitudine ricerca
+              const lon1 = this.longitude; //longitudine ricerca
+              const lat2 = address.latitude; //latitudine appartamento
+              const lon2 = address.longitude; // longitudine appartamento
+
+              const dLat = ((lat2 - lat1) * Math.PI) / 180;
+              const dLon = ((lon2 - lon1) * Math.PI) / 180;
+              const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos((lat1 * Math.PI) / 180) *
+                  Math.cos((lat2 * Math.PI) / 180) *
+                  Math.sin(dLon / 2) *
+                  Math.sin(dLon / 2);
+              const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+              const distance = R * c; // distanza in km
+             address.distance = distance.toFixed(1);
+
+           
+
+              // console.log('distanza', apartment.distance);
+
+              if (address.distance <= this.distanceNumber) {
+                closestAddresses.push(address);
+
+                console.log("APPARTAMENTO DISTANZA", this.addressesDistance);
+
+              } }
+            
+            });  
+
+            this.addressesDistance = closestAddresses;
+          }
+        });
     },
-    
+  },
 
-    watch: {
-		currentPage(){
-			this.getApartments();
-		},
-	},
-    
-    
+  created() {
+    this.getUtilities();
+    this.advancedSearchApartments();
+  },
 
+  watch: {
+    currentPage() {
+      this.getApartments();
+      this.advancedSearchApartments();
+    },
+  },
 
-
-    mounted() {
+  mounted() {
     setTimeout(() => {
       initFlowbite();
     }, 1500);
   },
-}
+};
 </script>
 
-
-
-
 <template>
-    <section>
-            <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://www.tourissimo.travel/hs-fs/hubfs/Blog_pictures/Joy%20of%20Travel%20Planning/Travel%20Plans%20Blog.jpg?width=2240&name=Travel%20Plans%20Blog.jpg); height: 38rem; background-repeat: no-repeat; background-size: cover; background-position: top;">
-                <h1 style="z-index: 20;" class="text-white text-6xl mt-12">Benvenuto Nella sezione di ricerca avanzata.</h1>
-                <h2 style="z-index: 20;" class="text-white text-3xl mt-12">Qui potrai cercare con facilità la destinazione dei tuoi sogni!</h2>
-                <div class="black-layer"></div>
-            </div>
-    </section>
-    <section class="p-12" style="border-top: 3px solid #f7daf2; border-bottom: 3px solid #f7daf2;">
-        <h1 class="text-4xl">Cerca per:</h1>
-        <form class="mt-5"  method="GET" >
-                
-                    <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Città o indirizzo:</h3> 
-                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
-                        </div>
-                            <!-- search -->
-                    <div class="col-xl-9 col-lg-9 col-md-7 col-12">
-                        <input class="form-control" id="search" name="search" type="search"  placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.Searchtext"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartments()">
-                        <datalist id="datalistOptions">                           
-                        </datalist>
-                    </div>
-                    </div>
-                
-            <div class="grid gap-6 mb-6 md:grid-cols-2 mt-12">
-                
-                <div>
-                    <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di stanze:</h3> 
-                <select @change="getApartments()" v-model="this.filterRooms"   id="filterRooms" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                </select>
-                </div>
+  <section>
+    <div
+      class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center"
+      style="
+        background-image: url(https://www.tourissimo.travel/hs-fs/hubfs/Blog_pictures/Joy%20of%20Travel%20Planning/Travel%20Plans%20Blog.jpg?width=2240&name=Travel%20Plans%20Blog.jpg);
+        height: 38rem;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top;
+      "
+    >
+      <h1 style="z-index: 20" class="text-white text-6xl mt-12">
+        Benvenuto Nella sezione di ricerca avanzata.
+      </h1>
+      <h2 style="z-index: 20" class="text-white text-3xl mt-12">
+        Qui potrai cercare con facilità la destinazione dei tuoi sogni!
+      </h2>
+      <div class="black-layer"></div>
+    </div>
+  </section>
+  <section
+    class="p-12"
+    style="border-top: 3px solid #f7daf2; border-bottom: 3px solid #f7daf2"
+  >
+    <h1 class="text-4xl">Cerca per:</h1>
+    <form class="mt-5" method="GET">
+      <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+        Città o indirizzo:
+      </h3>
+      <label
+        for="default-search"
+        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >Search</label
+      >
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <!-- search -->
+        <div class="col-xl-9 col-lg-9 col-md-7 col-12">
+          <input
+            class="form-control"
+            id="search"
+            name="search"
+            type="search"
+            placeholder="Inserisci la città o l'indirizzo"
+            aria-label="Search"
+            v-model="this.Searchtext"
+            list="datalistOptions"
+            @keyup="autocomplete()"
+            @keyup.enter="this.advancedSearchApartments()"
+          />
+          <datalist id="datalistOptions"> </datalist>
+        </div>
+      </div>
 
-                <div>
-                    <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Numero di letti:</h3> 
-                <select @change="getApartments()" v-model="this.filterBeds"  id="filterBeds" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                </select>
-                </div>
+      <div class="grid gap-6 mb-6 md:grid-cols-2 mt-12">
+        <div>
+          <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+            Numero di stanze:
+          </h3>
+          <select
+            @change="this.advancedSearchApartments()"
+            v-model="this.filterRooms"
+            id="filterRooms"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
 
-                <div class="mt-12">
-                    <label for="first_name" class="mb-4 text-xl font-semibold text-gray-900 dark:text-white block">Distanza Km: <span>0</span></label>
-                    <input class="rounded-lg overflow-hidden appearance-none bg-gray-400 h-3 w-128" type="range" min="1" max="100" step="1" value="0" />
-                </div>
+        <div>
+          <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+            Numero di letti:
+          </h3>
+          <select
+            @change="this.advancedSearchApartments()"
+            v-model="this.filterBeds"
+            id="filterBeds"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
 
+        <div class="mt-12">
+          <label
+            for="first_name"
+            class="mb-4 text-xl font-semibold text-gray-900 dark:text-white block"
+            >Distanza Km: <span>0</span></label
+          >
+          <input
+            class="rounded-lg overflow-hidden appearance-none bg-gray-400 h-3 w-128"
+            type="range"
+            min="1"
+            max="100"
+            step="1"
+            value="0"
+          />
+        </div>
 
+        <div>
+          <label
+            for="first_name"
+            class="mt-12 mb-4 text-xl font-semibold text-gray-900 dark:text-white block"
+            >Seleziona servizi:</label
+          >
 
-                <div>
-                    <label for="first_name" class="mt-12 mb-4 text-xl font-semibold text-gray-900 dark:text-white block">Seleziona servizi:</label>
+          <button
+            id="dropdownSearchButton"
+            data-dropdown-toggle="dropdownSearch"
+            class="text-end inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+          >
+            Servizi offerti
+            <svg
+              class="w-2.5 h-2.5 ml-2.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
 
-                <button
-                id="dropdownSearchButton"
-                data-dropdown-toggle="dropdownSearch"
-                class="text-end inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="button"
+          <!-- Dropdown menu -->
+          <div
+            id="dropdownSearch"
+            class="z-10 hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700"
+          >
+            <div class="p-3">
+              <label for="input-group-search" class="sr-only">Cerca</label>
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
                 >
-                Servizi offerti
-                <svg
-                    class="w-2.5 h-2.5 ml-2.5"
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 10 6"
-                >
+                    viewBox="0 0 20 20"
+                  >
                     <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                     />
-                </svg>
-                </button>
-
-                <!-- Dropdown menu -->
-                <div
-                    id="dropdownSearch"
-                    class="z-10 hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700"
-                    >
-                    <div class="p-3">
-                        <label for="input-group-search" class="sr-only">Cerca</label>
-                        <div class="relative">
-                        <div
-                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-                        >
-                            <svg
-                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                            >
-                            <path
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                            />
-                            </svg>
-                        </div>
-                        <input
-                            type="text"
-                            id="input-group-search"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search user"
-                        />
-                        </div>
-                    </div>
-                    <ul
-                        class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownSearchButton"
-                    >
-                        <li v-for="utility in arrUtilities" :key="utility.id">
-                        <div
-                            class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
-                        >
-                            <input
-                            @change="getApartments()"
-                            v-model="this.filterUtilities"
-                            id="utility"
-                            type="checkbox"
-                            :value="utility.id"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                            />
-                            <label
-                            for="utility"
-                            class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                            >{{ utility.name }}</label
-                            >
-                        </div>
-                        </li>
-                    </ul>
-                    </div>
-                    </div>
-                    <button type="button" @click="getApartments()" class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cerca</button>
+                  </svg>
                 </div>
-        </form>
-    </section>
-    <section class="mt-5">
-            <!-- <div v-if="Searchtext == ''">
+                <input
+                  type="text"
+                  id="input-group-search"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Search user"
+                />
+              </div>
+            </div>
+            <ul
+              class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownSearchButton"
+            >
+              <li v-for="utility in arrUtilities" :key="utility.id">
+                <div
+                  class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <input
+                    @change="this.advancedSearchApartments()"
+                    v-model="this.filterUtilities"
+                    id="utility"
+                    type="checkbox"
+                    :value="utility.id"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                  />
+                  <label
+                    for="utility"
+                    class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                    >{{ utility.name }}</label
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button
+          type="button"
+          @click="this.advancedSearchApartments()"
+          class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          Cerca
+        </button>
+      </div>
+    </form>
+  </section>
+  <section class="mt-5">
+    <!-- <div v-if="Searchtext == ''">
             </div> -->
-            
-            <div class="flex flex-wrap gap-5 justify-center">
-                <ApartmentCardVue   v-for="apartment in arrApartments" :key="apartment.id" :objApartment="apartment" />
-            </div>
-            <div class="mt-5 w-full flex justify-center">
-                <nav aria-label="Page navigation example">
-                    <ul class="inline-flex -space-x-px text-sm">
-                    <li >
-                    <a :class="{disabled: currentPage == 1}"  @click="currentPage--" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                    </li>
-                    
-                    <li v-for="page in nPages"
-                        :key="page"
-                        class="page-item"
-                        :class="{ active: page == currentPage }">
-                    <a @click="currentPage = page" href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        {{ page }}
-                    </a>
-                    </li>
-                    
-                    <li >
-                    <a :class="{disabled: currentPage == nPages}" @click="currentPage++" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                    </li>
-                    </ul>
-                </nav>
-            </div>
-    </section>
+
+    <div class="flex flex-wrap gap-5 justify-center">
+      <ApartmentCardVue
+        v-for="apartment in arrApartments"
+        :key="apartment.id"
+        :objApartment="apartment"
+      />
+    </div>
+    <div class="mt-5 w-full flex justify-center">
+      <nav aria-label="Page navigation example">
+        <ul class="inline-flex -space-x-px text-sm">
+          <li>
+            <a
+              :class="{ disabled: currentPage == 1 }"
+              @click="currentPage--"
+              class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >Previous</a
+            >
+          </li>
+
+          <li
+            v-for="page in nPages"
+            :key="page"
+            class="page-item"
+            :class="{ active: page == currentPage }"
+          >
+            <a
+              @click="currentPage = page"
+              href="#"
+              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              {{ page }}
+            </a>
+          </li>
+
+          <li>
+            <a
+              :class="{ disabled: currentPage == nPages }"
+              @click="currentPage++"
+              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >Next</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
 </template>
 
-
-
 <style scoped>
-
-.black-layer{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.50);
+.black-layer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-     
-     input[type="range"]::-webkit-slider-thumb {
-         width: 15px;
-         -webkit-appearance: none;
-           appearance: none;
-         height: 15px;
-         cursor: ew-resize;
-         background: #FFF;
-         box-shadow: -405px 0 0 400px #605E5C;
-         border-radius: 50%;
-         
-     }
- }
+  input[type="range"]::-webkit-slider-thumb {
+    width: 15px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    cursor: ew-resize;
+    background: #fff;
+    box-shadow: -405px 0 0 400px #605e5c;
+    border-radius: 50%;
+  }
+}
 </style>
