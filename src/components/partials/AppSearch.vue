@@ -276,7 +276,7 @@ export default {
             Numero di stanze:
           </h3>
           <select
-            @change=""
+           
             v-model="this.filterRooms"
             id="filterRooms"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -294,7 +294,7 @@ export default {
             Numero di letti:
           </h3>
           <select
-            @change=""
+            
             v-model="this.filterBeds"
             id="filterBeds"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -399,7 +399,7 @@ export default {
                   class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
                   <input
-                    @change=""
+                    
                     v-model="this.filterUtilities"
                     id="utility"
                     type="checkbox"
