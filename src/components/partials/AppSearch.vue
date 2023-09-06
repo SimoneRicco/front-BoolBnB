@@ -25,7 +25,9 @@ export default {
       filterAddresses: [],
       latitude: null,
       longitude: null,
-      distanceNumber: 20,
+      distanceNumber: 5,
+      addressesDistanceOne: [],
+      filteredApartment: [],
     };
   },
 
@@ -113,6 +115,7 @@ export default {
     },
 
     advancedSearchApartments() {
+        this.addressesDistance = [],
         axios
         .get(this.store.baseUrl + "api/addresses",)
         .then((response) => {
@@ -147,21 +150,36 @@ export default {
               if (address.distance <= this.distanceNumber) {
                 closestAddresses.push(address);
 
-                 console.log("APPARTAMENTO DISTANZA", this.addressesDistance);
+                //  console.log("APPARTAMENTO DISTANZA", this.addressesDistance);
 
               } 
-            
+              this.addressesDistanceOne = closestAddresses;
             });  
 
-            this.addressesDistance = closestAddresses;
+          
         
         });
     },
+
+     radiusFilter(){
+        this.arrApartments.forEach(apartment => {
+
+        
+             this.addressesDistanceOne.forEach(address => {
+                if(address.id == apartment.id) {
+                    return this.filteredApartment.push(apartment) 
+                 }
+               }); 
+
+        }); 
+    },
+    
+
+
   },
 
   created() {
     this.getUtilities();
-    this.advancedSearchApartments();
     this.getCoords
   },
 
@@ -246,7 +264,7 @@ export default {
             v-model="this.Searchtext"
             list="datalistOptions"
             @keyup="autocomplete()"
-            @keyup.enter=" this.advancedSearchApartments()"
+            @keyup.enter=""
           />
           <datalist id="datalistOptions"> </datalist>
         </div>
@@ -400,14 +418,7 @@ export default {
         </div>
         <button
           type="button"
-          @click="getCoords()"
-          class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          coords
-        </button>
-        <button
-          type="button"
-          @click="advancedSearchApartments()"
+          @click="getCoords(), advancedSearchApartments(), getApartments(), radiusFilter()"
           class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
           search
