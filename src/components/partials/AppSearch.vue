@@ -23,9 +23,9 @@ export default {
       max: 20,
       filterUtilities: [],
       filterAddresses: [],
-      latitude: 41.902697,
-      longitude: 12.496249,
-      distanceNumber: 3,
+      latitude: null,
+      longitude: null,
+      distanceNumber: 20,
     };
   },
 
@@ -37,6 +37,18 @@ export default {
     changePage(page) {
       this.currentPage = page;
       this.getApartments();
+    },
+
+    getCoords(){
+        axios
+          .get("https://api.tomtom.com/search/2/geocode/" + this.Searchtext + ".json?key=74CVsbN34KoIljJqOriAYN2ZMEYU1cwO")
+          .then((response) => {
+            this.latitude = response.data.results[0].position.lat,
+            this.longitude = response.data.results[0].position.lon
+             console.log ("latitudine", this.latitude)
+            console.log ("longitudine", this.longitude)
+
+          });
     },
 
     getApartments() {
@@ -63,51 +75,6 @@ export default {
       });
     },
 
-    // tom tom
-    async getTom() {
-      try {
-        const response = await ttServices.services
-          .geocode({
-            batchMode: "async",
-            key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-            query: store.address,
-            countrySet: "IT",
-            language: "it-IT",
-          })
-          .then((response) => {
-            const results = response.results;
-            // console.log(results)
-
-            // se abbiamo dei risultati ottenuti
-            if (results.length) {
-              const userAddressLower = store.address.toLowerCase();
-
-              for (const elem of results) {
-                const resultAddressLower =
-                  elem.address.freeformAddress.toLowerCase();
-
-                // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
-                if (resultAddressLower.includes(userAddressLower)) {
-                  this.latitude = elem.position.lat;
-                  this.longitude = elem.position.lng;
-                  console.log(this.latitude, this.longitude);
-
-                  break;
-                }
-              }
-            } else {
-              console.error(
-                "Nessun risultato trovato per l'indirizzo fornito."
-              );
-            }
-          });
-      } catch (error) {
-        console.error(
-          "Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:",
-          error
-        );
-      }
-    },
 
     autocomplete() {
       // Ottenimento dell'indirizzo dal campo input
@@ -124,7 +91,8 @@ export default {
           })
           .then(function (response) {
             const results = response.results;
-            // console.log(results)
+            // console.log("results", results)
+        
 
             // se abbiamo dei risultati ottenuti
             if (results.length) {
@@ -146,31 +114,14 @@ export default {
 
     advancedSearchApartments() {
         axios
-        .get(this.store.baseUrl + "api/addresses", {
-        //   params: {
-        //     latitude: this.latitude,
-        //     longitude: this.longitude,
-        //   },
-    //   axios
-    //     .get("http://127.0.0.1:8000/api/apartments", {
-    //       params: {
-    //         bed: this.bed,
-    //         room: this.room,
-    //         bathroom: this.bathroom,
-    //         price: this.price,
-    //         services: this.services,
-    //         type: this.types,
-    //       },
-        })
+        .get(this.store.baseUrl + "api/addresses",)
         .then((response) => {
           this.filterAddresses = response.data.results;
-          console.log("Addresses filtrati", this.filterAddresses);
+        //    console.log("Addresses filtrati", this.filterAddresses);
 
-          if (this.latitude !== null || this.longitude !== null) {
             const closestAddresses = [];
             
             this.filterAddresses.forEach((address) => {
-                if (address.latitude !== null || address.longitude !== null) {
               const R = 6371; // raggio della Terra in km
               const lat1 = this.latitude; //latitudine ricerca
               const lon1 = this.longitude; //longitudine ricerca
@@ -191,19 +142,19 @@ export default {
 
            
 
-              // console.log('distanza', apartment.distance);
+            //    console.log('distanza', apartment.distance);
 
               if (address.distance <= this.distanceNumber) {
                 closestAddresses.push(address);
 
-                console.log("APPARTAMENTO DISTANZA", this.addressesDistance);
+                 console.log("APPARTAMENTO DISTANZA", this.addressesDistance);
 
-              } }
+              } 
             
             });  
 
             this.addressesDistance = closestAddresses;
-          }
+        
         });
     },
   },
@@ -211,12 +162,12 @@ export default {
   created() {
     this.getUtilities();
     this.advancedSearchApartments();
+    this.getCoords
   },
 
   watch: {
     currentPage() {
       this.getApartments();
-      this.advancedSearchApartments();
     },
   },
 
@@ -295,7 +246,7 @@ export default {
             v-model="this.Searchtext"
             list="datalistOptions"
             @keyup="autocomplete()"
-            @keyup.enter="this.advancedSearchApartments()"
+            @keyup.enter=" this.advancedSearchApartments()"
           />
           <datalist id="datalistOptions"> </datalist>
         </div>
@@ -307,7 +258,7 @@ export default {
             Numero di stanze:
           </h3>
           <select
-            @change="this.advancedSearchApartments()"
+            @change=""
             v-model="this.filterRooms"
             id="filterRooms"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -325,7 +276,7 @@ export default {
             Numero di letti:
           </h3>
           <select
-            @change="this.advancedSearchApartments()"
+            @change=""
             v-model="this.filterBeds"
             id="filterBeds"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -384,6 +335,7 @@ export default {
               />
             </svg>
           </button>
+          
 
           <!-- Dropdown menu -->
           <div
@@ -429,7 +381,7 @@ export default {
                   class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
                   <input
-                    @change="this.advancedSearchApartments()"
+                    @change=""
                     v-model="this.filterUtilities"
                     id="utility"
                     type="checkbox"
@@ -448,10 +400,17 @@ export default {
         </div>
         <button
           type="button"
-          @click="this.advancedSearchApartments()"
+          @click="getCoords()"
           class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
-          Cerca
+          coords
+        </button>
+        <button
+          type="button"
+          @click="advancedSearchApartments()"
+          class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          search
         </button>
       </div>
     </form>
