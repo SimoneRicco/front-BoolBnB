@@ -181,7 +181,6 @@ export default {
 
   created() {
     this.getUtilities();
-    this.getCoords
   },
 
   watch: {
@@ -265,7 +264,6 @@ export default {
             v-model="this.Searchtext"
             list="datalistOptions"
             @keyup="autocomplete()"
-            @keyup.enter=""
           />
           <datalist id="datalistOptions"> </datalist>
         </div>
