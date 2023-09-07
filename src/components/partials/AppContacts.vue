@@ -3,81 +3,79 @@
 // import { store } from "../../../store";
 
 export default {
-//   data() {
-//     return {
-//       store,
-//       name: "",
-//       last_name: "",
-//       email: "",
-//       message: "",
-//       apartment_id: "",
-//       apartments: [],
-//       showSuccess: false,
-//       isSending: false,
-//       hasError: false,
-//       isLoading: false,
-//     };
-//   },
-//   methods: {
-//         sendLead() {
-//       this.isLoading = true;
-//       this.isSending = true;
-//       console.log("Selected Apartment ID:", this.apartment_id);
-
-//       // Verifica se l'utente ha selezionato un appartamento
-//       if (this.apartment_id) {
-//         axios
-//           .post(this.store.baseUrl + "api/messages", {
-//             name: this.name,
-//             last_name: this.last_name,
-//             email: this.email,
-//             message: this.message,
-//             apartment_id: this.apartment_id,
-//           })
-//           .then((response) => {
-//             this.isSending = false;
-
-//             if (response.data.success) {
-//               this.showSuccess = true;
-//               this.resetForm(); // Ripulisci il form in caso di successo
-//             } else {
-//               this.hasError = true;
-//               this.resetForm(); // Ripulisci il form anche in caso di errore
-//             }
-//           })
-//           .catch((error) => {
-//             console.error("Errore durante la richiesta Axios:", error.response.data);
-//             this.isSending = false;
-//             this.hasError = true;
-//             this.resetForm(); // Ripulisci il form in caso di errore
-//           });
-//       } else {
-//         console.error("Nessun appartamento selezionato");
-//         this.isSending = false;
-//         this.hasError = true;
-//         this.resetForm(); // Ripulisci il form in caso di errore
-//       }
-//     },
-//     resetForm() {
-//       this.name = "";
-//       this.last_name = "";
-//       this.email = "";
-//       this.message = "";
-//       this.apartment_id = "";
-//     },
-//     getApartments() {
-//       axios
-//         .get(this.store.baseUrl + "api/apartments/")
-//         .then((response) => {
-//           this.apartments = response.data.results.data;
-//           console.log(this.apartments);
-//         })
-//         .catch(() => (this.is404 = true));
-//     },
-//   },
-//   created() {
-//     this.getApartments();
-//   },
+  //   data() {
+  //     return {
+  //       store,
+  //       name: "",
+  //       last_name: "",
+  //       email: "",
+  //       message: "",
+  //       apartment_id: "",
+  //       apartments: [],
+  //       showSuccess: false,
+  //       isSending: false,
+  //       hasError: false,
+  //       isLoading: false,
+  //     };
+  //   },
+  //   methods: {
+  //         sendLead() {
+  //       this.isLoading = true;
+  //       this.isSending = true;
+  //       console.log("Selected Apartment ID:", this.apartment_id);
+  //       // Verifica se l'utente ha selezionato un appartamento
+  //       if (this.apartment_id) {
+  //         axios
+  //           .post(this.store.baseUrl + "api/messages", {
+  //             name: this.name,
+  //             last_name: this.last_name,
+  //             email: this.email,
+  //             message: this.message,
+  //             apartment_id: this.apartment_id,
+  //           })
+  //           .then((response) => {
+  //             this.isSending = false;
+  //             if (response.data.success) {
+  //               this.showSuccess = true;
+  //               this.resetForm(); // Ripulisci il form in caso di successo
+  //             } else {
+  //               this.hasError = true;
+  //               this.resetForm(); // Ripulisci il form anche in caso di errore
+  //             }
+  //           })
+  //           .catch((error) => {
+  //             console.error("Errore durante la richiesta Axios:", error.response.data);
+  //             this.isSending = false;
+  //             this.hasError = true;
+  //             this.resetForm(); // Ripulisci il form in caso di errore
+  //           });
+  //       } else {
+  //         console.error("Nessun appartamento selezionato");
+  //         this.isSending = false;
+  //         this.hasError = true;
+  //         this.resetForm(); // Ripulisci il form in caso di errore
+  //       }
+  //     },
+  //     resetForm() {
+  //       this.name = "";
+  //       this.last_name = "";
+  //       this.email = "";
+  //       this.message = "";
+  //       this.apartment_id = "";
+  //     },
+  //     getApartments() {
+  //       axios
+  //         .get(this.store.baseUrl + "api/apartments/")
+  //         .then((response) => {
+  //           this.apartments = response.data.results.data;
+  //           console.log(this.apartments);
+  //         })
+  //         .catch(() => (this.is404 = true));
+  //     },
+  //   },
+  //   created() {
+  //     this.getApartments();
+  //   },
 };
 </script>
 
@@ -242,7 +240,6 @@ export default {
     ></i>
   </div>
 </div> -->
-
     <div class="w-screen flex flex-col w-fit content-center flex-wrap">
       <div class="w-1/2 flex justify-center items-center">
         <div class="left bg-red-300 p-4 my-6 rounded-3xl">
@@ -324,7 +321,6 @@ export default {
       </div>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
@@ -334,7 +330,7 @@ export default {
   height: 150px;
   background: transparent;
   border-radius: 50%;
-  box-shadow: 25px 25px 75px rgba(0,0,0,0.55);
+  box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.55);
   border: 1px solid #333;
   display: flex;
   align-items: center;
@@ -343,25 +339,25 @@ export default {
 }
 
 .loader::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 20px;
   background: transparent;
   border: 1px dashed#444;
   border-radius: 50%;
-  box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25),
-  inset 5px 5px 35px rgba(0,0,0,0.25);
+  box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.25),
+    inset 5px 5px 35px rgba(0, 0, 0, 0.25);
 }
 
 .loader::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   border: 1px dashed#444;
-  box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25),
-  inset 5px 5px 35px rgba(0,0,0,0.25);
+  box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.25),
+    inset 5px 5px 35px rgba(0, 0, 0, 0.25);
 }
 
 .loader span {
@@ -377,7 +373,7 @@ export default {
 }
 
 .loader span::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;

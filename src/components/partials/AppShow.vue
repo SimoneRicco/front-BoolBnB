@@ -3,8 +3,10 @@ import { store } from "../../../store";
 import App404 from "../App404.vue";
 import axios from "axios";
 import { initFlowbite } from "flowbite";
+import MapsVue from "./Maps.vue";
 
 export default {
+  name: "App",
   data() {
     return {
       autorun: null,
@@ -23,10 +25,12 @@ export default {
       isSending: false,
       hasError: false,
       isLoading: false,
+      coordinates: [],
     };
   },
   components: {
     App404,
+    MapsVue,
   },
   methods: {
     getApartment() {
@@ -36,6 +40,10 @@ export default {
           this.apartment = response.data.results;
           this.carouselImages = this.apartment.image;
           this.apartment_id = response.data.results.id; // Ottieni l'ID dall'API
+          this.coordinates = [
+            this.apartment.address.longitude,
+            this.apartment.address.latitude,
+          ];
         })
         .catch(() => (this.is404 = true));
     },
@@ -108,7 +116,10 @@ export default {
             }
           })
           .catch((error) => {
-            console.error("Errore durante la richiesta Axios:", error.response.data);
+            console.error(
+              "Errore durante la richiesta Axios:",
+              error.response.data
+            );
             this.isSending = false;
             this.hasError = true;
             this.resetForm(); // Ripulisci il form in caso di errore
@@ -464,10 +475,11 @@ export default {
     </div>
   </div>
 
+  <MapsVue v-if="coordinates.length > 0" :coordinates="coordinates" />
 
- <!-- ******************* contattaci *************************** -->
+  <!-- ******************* contattaci *************************** -->
 
- <div>
+  <div>
     <h1 class="text-3xl my-3.5 text-center">Contact us</h1>
     <div v-if="hasError" class="m-4">
       Error in form submission!
@@ -501,119 +513,119 @@ export default {
     <section>
       <!-- ***************** loader ************************** -->
 
-        <div class="scene loader" v-if="isSending">
-          <div class="forest">
-            <div class="tree tree1">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-            </div>
-
-            <div class="tree tree2">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-              <div class="branch branch-bottom"></div>
-            </div>
-
-            <div class="tree tree3">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-              <div class="branch branch-bottom"></div>
-            </div>
-
-            <div class="tree tree4">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-              <div class="branch branch-bottom"></div>
-            </div>
-
-            <div class="tree tree5">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-              <div class="branch branch-bottom"></div>
-            </div>
-
-            <div class="tree tree6">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-              <div class="branch branch-bottom"></div>
-            </div>
-
-            <div class="tree tree7">
-              <div class="branch branch-top"></div>
-              <div class="branch branch-middle"></div>
-              <div class="branch branch-bottom"></div>
-            </div>
+      <div class="scene loader" v-if="isSending">
+        <div class="forest">
+          <div class="tree tree1">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
           </div>
-          
-          <div class="tent">
-              <div class="roof"></div>
-              <div class="roof-border-left">
-                <div class="roof-border roof-border1"></div>
-                <div class="roof-border roof-border2"></div>
-                <div class="roof-border roof-border3"></div>
-              </div>
-              <div class="entrance">
-                <div class="door left-door">
-                  <div class="left-door-inner"></div>
-                </div>
-                <div class="door right-door">
-                  <div class="right-door-inner"></div>
-                </div>
-              </div>
-            </div>
 
-          <div class="floor">
-              <div class="ground ground1"></div>
-              <div class="ground ground2"></div>
-            </div>
-          
-          <div class="fireplace">
-            <div class="support"></div>
-            <div class="support"></div>
-            <div class="bar"></div>
-            <div class="hanger"></div>
-            <div class="smoke"></div>
-            <div class="pan"></div>
-            <div class="fire">
-              <div class="line line1">
-                <div class="particle particle1"></div>
-                <div class="particle particle2"></div>
-                <div class="particle particle3"></div>
-                <div class="particle particle4"></div>
-              </div>
-              <div class="line line2">
-                <div class="particle particle1"></div>
-                <div class="particle particle2"></div>
-                <div class="particle particle3"></div>
-                <div class="particle particle4"></div>
-              </div>
-              <div class="line line3">
-                <div class="particle particle1"></div>
-                <div class="particle particle2"></div>
-                <div class="particle particle3"></div>
-                <div class="particle particle4"></div>
-              </div>
-            </div>
+          <div class="tree tree2">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
+            <div class="branch branch-bottom"></div>
           </div>
-          
-          <div class="time-wrapper">
-            <div class="time">
-              <div class="day"></div>
-              <div class="night">
-                <div class="moon"></div>
-                <div class="star star1 star-big"></div>
-                <div class="star star2 star-big"></div>
-                <div class="star star3 star-big"></div>
-                <div class="star star4"></div>
-                <div class="star star5"></div>
-                <div class="star star6"></div>
-                <div class="star star7"></div>
-              </div>
+
+          <div class="tree tree3">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
+            <div class="branch branch-bottom"></div>
+          </div>
+
+          <div class="tree tree4">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
+            <div class="branch branch-bottom"></div>
+          </div>
+
+          <div class="tree tree5">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
+            <div class="branch branch-bottom"></div>
+          </div>
+
+          <div class="tree tree6">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
+            <div class="branch branch-bottom"></div>
+          </div>
+
+          <div class="tree tree7">
+            <div class="branch branch-top"></div>
+            <div class="branch branch-middle"></div>
+            <div class="branch branch-bottom"></div>
+          </div>
+        </div>
+
+        <div class="tent">
+          <div class="roof"></div>
+          <div class="roof-border-left">
+            <div class="roof-border roof-border1"></div>
+            <div class="roof-border roof-border2"></div>
+            <div class="roof-border roof-border3"></div>
+          </div>
+          <div class="entrance">
+            <div class="door left-door">
+              <div class="left-door-inner"></div>
+            </div>
+            <div class="door right-door">
+              <div class="right-door-inner"></div>
             </div>
           </div>
         </div>
 
-        <!-- ***************** loader ************************** -->
+        <div class="floor">
+          <div class="ground ground1"></div>
+          <div class="ground ground2"></div>
+        </div>
+
+        <div class="fireplace">
+          <div class="support"></div>
+          <div class="support"></div>
+          <div class="bar"></div>
+          <div class="hanger"></div>
+          <div class="smoke"></div>
+          <div class="pan"></div>
+          <div class="fire">
+            <div class="line line1">
+              <div class="particle particle1"></div>
+              <div class="particle particle2"></div>
+              <div class="particle particle3"></div>
+              <div class="particle particle4"></div>
+            </div>
+            <div class="line line2">
+              <div class="particle particle1"></div>
+              <div class="particle particle2"></div>
+              <div class="particle particle3"></div>
+              <div class="particle particle4"></div>
+            </div>
+            <div class="line line3">
+              <div class="particle particle1"></div>
+              <div class="particle particle2"></div>
+              <div class="particle particle3"></div>
+              <div class="particle particle4"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="time-wrapper">
+          <div class="time">
+            <div class="day"></div>
+            <div class="night">
+              <div class="moon"></div>
+              <div class="star star1 star-big"></div>
+              <div class="star star2 star-big"></div>
+              <div class="star star3 star-big"></div>
+              <div class="star star4"></div>
+              <div class="star star5"></div>
+              <div class="star star6"></div>
+              <div class="star star7"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ***************** loader ************************** -->
       <div
         class="border-solid border-2 border-dark-600 my-6 m-auto block max-w-md rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
         v-if="!isSending"
@@ -622,7 +634,6 @@ export default {
           class="background-color: rgba(0, 0, 0, 0.6) bg-cover contact bg-[url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80')]"
           v-if="!isSending"
         >
-        
           <form @submit.prevent="sendLead" v-if="!isSending">
             <div class="relative mb-6" data-te-input-wrapper-init>
               <input
@@ -697,9 +708,7 @@ export default {
     </section>
   </div>
 
-
- <!-- ******************* contattaci *************************** -->
-
+  <!-- ******************* contattaci *************************** -->
 
   <div id="accordion-collapse" data-accordion="collapse">
     <h2 id="accordion-collapse-heading-1">
@@ -1040,11 +1049,15 @@ export default {
 
 /* loader */
 @keyframes stageBackground {
-  0%, 10%, 90%, 100% {
-    background-color: #00B6BB;
+  0%,
+  10%,
+  90%,
+  100% {
+    background-color: #00b6bb;
   }
 
-  25%, 75% {
+  25%,
+  75% {
     background-color: #0094bd;
   }
 }
@@ -1060,12 +1073,18 @@ export default {
 }
 
 @keyframes sunrise {
-  0%, 10%, 90%, 100% {
-    box-shadow: 0 0 0 25px #5ad6bd, 0 0 0 40px #4acead, 0 0 0 60px rgba(74, 206, 173, 0.6), 0 0 0 90px rgba(74, 206, 173, 0.3);
+  0%,
+  10%,
+  90%,
+  100% {
+    box-shadow: 0 0 0 25px #5ad6bd, 0 0 0 40px #4acead,
+      0 0 0 60px rgba(74, 206, 173, 0.6), 0 0 0 90px rgba(74, 206, 173, 0.3);
   }
 
-  25%, 75% {
-    box-shadow: 0 0 0 0 #5ad6bd, 0 0 0 0 #4acead, 0 0 0 0 rgba(74, 206, 173, 0.6), 0 0 0 0 rgba(74, 206, 173, 0.3);
+  25%,
+  75% {
+    box-shadow: 0 0 0 0 #5ad6bd, 0 0 0 0 #4acead,
+      0 0 0 0 rgba(74, 206, 173, 0.6), 0 0 0 0 rgba(74, 206, 173, 0.3);
   }
 }
 
@@ -1082,57 +1101,71 @@ export default {
     transform: rotate(-120deg);
   }
 
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(-180deg);
   }
 }
 
 @keyframes nightTime {
-  0%, 90% {
+  0%,
+  90% {
     opacity: 0;
   }
 
-  50%, 75% {
+  50%,
+  75% {
     opacity: 1;
   }
 }
 
 @keyframes hotPan {
-  0%, 90% {
+  0%,
+  90% {
     background-color: #74667e;
   }
 
-  50%, 75% {
+  50%,
+  75% {
     background-color: #b2241c;
   }
 }
 
 @keyframes heat {
-  0%, 90% {
+  0%,
+  90% {
     box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.3);
   }
 
-  50%, 75% {
+  50%,
+  75% {
     box-shadow: inset 0 -2px 0 0 white;
   }
 }
 
 @keyframes smoke {
-  0%, 50%, 90%, 100% {
+  0%,
+  50%,
+  90%,
+  100% {
     opacity: 0;
   }
 
-  50%, 75% {
+  50%,
+  75% {
     opacity: 0.7;
   }
 }
 
 @keyframes fire {
-  0%, 90%, 100% {
+  0%,
+  90%,
+  100% {
     opacity: 0;
   }
 
-  50%, 75% {
+  50%,
+  75% {
     opacity: 1;
   }
 }
@@ -1198,7 +1231,10 @@ export default {
 }
 
 @keyframes fireLines {
-  0%, 25%, 75%, 100% {
+  0%,
+  25%,
+  75%,
+  100% {
     bottom: 0;
   }
 
@@ -1354,12 +1390,12 @@ export default {
   /*bottom: 0;
   right: 9%;*/
   z-index: 1;
-  border-top: 4px solid #4D4454;
-  border-right: 4px solid #4D4454;
-  border-left: 4px solid #4D4454;
+  border-top: 4px solid #4d4454;
+  border-right: 4px solid #4d4454;
+  border-left: 4px solid #4d4454;
   border-top-right-radius: 6px;
   transform: skew(30deg);
-  box-shadow: inset -3px 3px 0px 0px #F7B563;
+  box-shadow: inset -3px 3px 0px 0px #f7b563;
   /*background: linear-gradient(
     to bottom, 
     rgba(246,212,132,1) 0%,
@@ -1381,7 +1417,7 @@ export default {
   left: 15%;
   z-index: 0;
   border-radius: 10%;
-  background-color: #E78C20;
+  background-color: #e78c20;
 }
 
 .roof:after {
@@ -1392,7 +1428,13 @@ export default {
   bottom: 0;
   right: 0;
   z-index: 1;
-  background: linear-gradient(to bottom, rgba(231, 140, 32, 0.4) 0%, rgba(231, 140, 32, 0.4) 64%, rgba(231, 140, 32, 0.8) 65%, rgba(231, 140, 32, 0.8) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(231, 140, 32, 0.4) 0%,
+    rgba(231, 140, 32, 0.4) 64%,
+    rgba(231, 140, 32, 0.8) 65%,
+    rgba(231, 140, 32, 0.8) 100%
+  );
 }
 
 .roof-border-left {
@@ -1413,7 +1455,7 @@ export default {
   display: block;
   width: 100%;
   border-radius: 2px;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
 }
 
 .roof-border-left .roof-border1 {
@@ -1454,7 +1496,7 @@ export default {
   position: absolute;
   top: 0;
   overflow: hidden;
-  background-color: #EDDDC2;
+  background-color: #edddc2;
 }
 
 .left-door .left-door-inner:before {
@@ -1464,7 +1506,12 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  background: repeating-linear-gradient(#D4BC8B, #D4BC8B 4%, #E0D2A8 5%, #E0D2A8 10%);
+  background: repeating-linear-gradient(
+    #d4bc8b,
+    #d4bc8b 4%,
+    #e0d2a8 5%,
+    #e0d2a8 10%
+  );
 }
 
 .left-door .left-door-inner:after {
@@ -1496,7 +1543,7 @@ export default {
   position: absolute;
   bottom: 0px;
   overflow: hidden;
-  background-color: #EFE7CF;
+  background-color: #efe7cf;
 }
 
 .right-door .right-door-inner:before {
@@ -1508,7 +1555,7 @@ export default {
   right: -28%;
   z-index: 1;
   transform: rotate(15deg);
-  background-color: #524A5A;
+  background-color: #524a5a;
 }
 
 .right-door .right-door-inner:after {
@@ -1533,7 +1580,7 @@ export default {
 .floor .ground {
   position: absolute;
   border-radius: 2px;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
 }
 
 .floor .ground.ground1 {
@@ -1562,8 +1609,8 @@ export default {
   bottom: -4px;
   left: 2%;
   border-radius: 2px;
-  border: 2px solid #4D4454;
-  background: #4D4454;
+  border: 2px solid #4d4454;
+  background: #4d4454;
 }
 
 .fireplace .support {
@@ -1573,7 +1620,7 @@ export default {
   position: absolute;
   bottom: -5%;
   left: 10%;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
 }
 
 .fireplace .support:before {
@@ -1584,7 +1631,7 @@ export default {
   top: -18%;
   left: -4px;
   border-radius: 2px;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
   transform-origin: 100% 100%;
   transform: rotate(45deg);
 }
@@ -1597,7 +1644,7 @@ export default {
   top: -18%;
   left: 0px;
   border-radius: 2px;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
   transform-origin: 0 100%;
   transform: rotate(-45deg);
 }
@@ -1610,7 +1657,7 @@ export default {
   width: 100%;
   height: 2px;
   border-radius: 2px;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
 }
 
 .fireplace .hanger {
@@ -1620,7 +1667,7 @@ export default {
   margin-left: -4px;
   position: absolute;
   left: 50%;
-  border: 2px solid #4D4454;
+  border: 2px solid #4d4454;
 }
 
 .fireplace .pan {
@@ -1628,7 +1675,7 @@ export default {
   width: 25%;
   height: 50%;
   border-radius: 50%;
-  border: 4px solid #4D4454;
+  border: 4px solid #4d4454;
   position: absolute;
   top: 25%;
   left: 35%;
@@ -1644,7 +1691,7 @@ export default {
   position: absolute;
   bottom: 0;
   z-index: -1;
-  border-top: 4px solid #4D4454;
+  border-top: 4px solid #4d4454;
   background-color: #74667e;
   animation: hotPan 5s linear infinite;
 }
@@ -1757,7 +1804,8 @@ export default {
   top: 20%;
   left: 40%;
   border-radius: 50%;
-  box-shadow: 0 0 0 25px #5ad6bd, 0 0 0 40px #4acead, 0 0 0 60px rgba(74, 206, 173, 0.6), 0 0 0 90px rgba(74, 206, 173, 0.3);
+  box-shadow: 0 0 0 25px #5ad6bd, 0 0 0 40px #4acead,
+    0 0 0 60px rgba(74, 206, 173, 0.6), 0 0 0 90px rgba(74, 206, 173, 0.3);
   animation: sunrise 5s ease-in-out infinite;
   background-color: #ef9431;
 }
@@ -1839,7 +1887,9 @@ export default {
   bottom: -9px;
   left: 9px;
   border-radius: 50%;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.05), 0 0 0 15px rgba(255, 255, 255, 0.05), 0 0 0 25px rgba(255, 255, 255, 0.05), 0 0 0 35px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.05),
+    0 0 0 15px rgba(255, 255, 255, 0.05), 0 0 0 25px rgba(255, 255, 255, 0.05),
+    0 0 0 35px rgba(255, 255, 255, 0.05);
   background-color: rgba(255, 255, 255, 0.2);
 }
 </style>
