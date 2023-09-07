@@ -11,8 +11,8 @@ export default {
     return {
       results: [],
       Searchtext: "",
-      filterRooms: null,
-      filterBeds: null,
+      filterRooms: 1,
+      filterBeds: 1,
       radius: 20,
       arrApartments: [],
       arrUtilities: [],
@@ -81,7 +81,7 @@ export default {
     autocomplete() {
       // Ottenimento dell'indirizzo dal campo input
       const search = document.querySelector("#search");
-
+      this.advancedSearchApartments()
       if (search.value) {
         ttServices.services
           .geocode({
@@ -115,6 +115,7 @@ export default {
     },
 
     advancedSearchApartments() {
+      this.getCoords();
         this.addressesDistance = [],
         axios
         .get(this.store.baseUrl + "api/addresses",)
@@ -233,29 +234,10 @@ export default {
         >Search</label
       >
       <div class="relative">
-        <div
-          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-        >
-          <svg
-            class="w-4 h-4 text-gray-500 dark:text-gray-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-            />
-          </svg>
-        </div>
         <!-- search -->
         <div class="col-xl-9 col-lg-9 col-md-7 col-12">
           <input
-            class="form-control"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             id="search"
             name="search"
             type="search"
@@ -264,6 +246,7 @@ export default {
             v-model="this.Searchtext"
             list="datalistOptions"
             @keyup="autocomplete()"
+            @change="getApartments(), advancedSearchApartments()"
           />
           <datalist id="datalistOptions"> </datalist>
         </div>
@@ -275,7 +258,7 @@ export default {
             Numero di stanze:
           </h3>
           <select
-           
+            @change="getApartments()"
             v-model="this.filterRooms"
             id="filterRooms"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -293,7 +276,7 @@ export default {
             Numero di letti:
           </h3>
           <select
-            
+            @change="getApartments()"
             v-model="this.filterBeds"
             id="filterBeds"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -306,22 +289,23 @@ export default {
           </select>
         </div>
 
-       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-        <select v-model="this.distanceNumber" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Choose a distance</option>
-        <option type="number" value="1">1</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
+        <div>
+          <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+            Seleziona raggio di ricerca:
+          </h3>          <select @change="advancedSearchApartments()" v-model="this.distanceNumber" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option>Choose a distance</option>
+          <option value="1">1 Km</option>
+          <option value="5">5 Km</option>
+          <option value="10">10 Km</option>
+          <option value="15">15 Km</option>
+          <option value="20" selected>20 Km</option>
         </select> 
+      </div>
 
         <div>
-          <label
-            for="first_name"
-            class="mt-12 mb-4 text-xl font-semibold text-gray-900 dark:text-white block"
-            >Seleziona servizi:</label
-          >
+          <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+            Seleziona servizi:
+          </h3>
 
           <button
             id="dropdownSearchButton"
@@ -351,7 +335,7 @@ export default {
           <!-- Dropdown menu -->
           <div
             id="dropdownSearch"
-            class="z-10 hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700"
+            class="z-99 hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700"
           >
             <div class="p-3">
               <label for="input-group-search" class="sr-only">Cerca</label>
@@ -392,7 +376,7 @@ export default {
                   class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
                   <input
-                    
+                    @change="getApartments()"
                     v-model="this.filterUtilities"
                     id="utility"
                     type="checkbox"
@@ -409,14 +393,16 @@ export default {
             </ul>
           </div>
         </div>
-        <button
-          type="button"
-          @click="getCoords(), advancedSearchApartments(), getApartments(), radiusFilter()"
-          class="w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          search
-        </button>
       </div>
+      <div class="w-full flex justify-center mt-24">
+          <button
+            type="button"
+            @click="radiusFilter()"
+            class="flex w-24 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+          &#x1F50D; Search
+          </button>
+        </div>
     </form>
   </section>
   <section class="mt-5">
@@ -430,7 +416,7 @@ export default {
         :objApartment="apartment"
       />
     </div>
-    <div class="mt-5 w-full flex justify-center">
+    <div v-if="this.filteredApartment.length > 0" class="mt-5 w-full flex justify-center z-9">
       <nav aria-label="Page navigation example">
         <ul class="inline-flex -space-x-px text-sm">
           <li>
