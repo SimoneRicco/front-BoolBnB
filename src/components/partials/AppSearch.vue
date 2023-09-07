@@ -147,7 +147,7 @@ export default {
 
             //    console.log('distanza', apartment.distance);
 
-              if (address.distance <= this.distanceNumber) {
+              if (address.distance <= parseInt(this.distanceNumber)) {
                 closestAddresses.push(address);
 
                 //  console.log("APPARTAMENTO DISTANZA", this.addressesDistance);
