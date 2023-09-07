@@ -11,7 +11,7 @@ export default {
     <div
       class="text-2xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
-      <a href="https://flowbite.com/" class="flex items-center">
+      <a href="/" class="flex items-center">
         <img
           src="../../images/logo_test.png"
           class="mr-3 h-14 w-32"
