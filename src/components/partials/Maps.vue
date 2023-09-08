@@ -1,8 +1,3 @@
-<template>
-  <h1>{{ coordinates[0] }}</h1>
-  <div id="map" ref="mapRef"></div>
-</template>
-
 <script>
 import { onMounted, ref } from "vue";
 
@@ -58,6 +53,10 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div id="map" ref="mapRef"></div>
+</template>
 
 <style>
 #map {
