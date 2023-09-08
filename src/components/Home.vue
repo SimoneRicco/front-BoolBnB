@@ -277,7 +277,7 @@ export default {
           <ul class="inline-flex -space-x-px text-sm">
             <li>
               <a
-                :class="{ disabled: currentPage == 1 }"
+                :class="{ invisible: currentPage == 1 }"
                 @click="currentPage--"
                 class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >Previous</a
@@ -291,6 +291,7 @@ export default {
               :class="{ active: page == currentPage }"
             >
               <a
+                :class="{ disabled: currentPage == 1 }"
                 @click="currentPage = page"
                 href="#"
                 class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -301,7 +302,7 @@ export default {
 
             <li>
               <a
-                :class="{ disabled: currentPage == nPages }"
+                :class="{ invisible: currentPage == nPages }"
                 @click="currentPage++"
                 class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >Next</a
