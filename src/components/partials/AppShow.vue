@@ -154,7 +154,7 @@ export default {
 
 <template>
   <App404 v-if="is404" />
-  <div v-else-if="apartment">
+  <div v-else-if="apartment" class="mt-12">
     <div class="flex justify-center items-baseline">
       <h1
         style="font-style: italic"
@@ -431,8 +431,7 @@ export default {
     <section class="w-12/12 p-5 md:w-6/12">
       <h1 class="text-4xl mb-12">Descrizione:</h1>
       <p class="text-xl">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate voluptas non animi ipsam dolores rem, quod quo laborum nobis ratione excepturi nihil cupiditate voluptatem ad dignissimos dolorum, doloribus, ipsum delectus.
-        Nesciunt qui odio quos inventore sunt delectus, asperiores similique eveniet modi necessitatibus nihil sequi, numquam voluptas repellat explicabo dolore. Animi ipsa beatae at et consectetur iste neque doloremque fuga facere.
+        {{ apartment.description }}
       </p>
     </section>
   </div>

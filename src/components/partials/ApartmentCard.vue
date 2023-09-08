@@ -72,11 +72,14 @@ export default {
       <p class="mt-1 mb-2 font-normal text-gray-700 dark:text-gray-400">
         {{ objApartment.address.address }}
       </p>
-      <p class="mb-3">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt ut
-        natus laborum ratione perspiciatis reiciendis nulla sequi minus. Eius,
-        maiores facilis incidunt vel similique illum nostrum alias cupiditate ea
-        praesentium?
+      <p class="mb-3" 
+      style="
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;">
+        {{ objApartment.description }}
       </p>
       <router-link
         :to="{ name: 'apartments.show', params: { slug: objApartment.slug } }"
