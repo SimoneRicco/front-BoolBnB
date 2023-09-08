@@ -162,7 +162,10 @@ export default {
       >
         '{{ capitalized(apartment.title) }}'
       </h1>
-      <div v-if="apartment.sponsor_id != 0">
+      <div v-if="apartment.sponsors.length === 0">
+        
+      </div>
+      <div v-else>
         <svg
           class="w-8 h-8 ml-3 text-gray-800 dark:text-white"
           aria-hidden="true"
@@ -180,6 +183,7 @@ export default {
           />
         </svg>
       </div>
+      
     </div>
 
     <div>
