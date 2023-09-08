@@ -22,6 +22,7 @@ export default {
         key: "iqmn2JZ2yHOhs2bC6YdGXSgWWzLQ4Hq8",
         container: mapRef.value,
         style: "tomtom://vector/1/basic-main",
+        zoom: 13,
       });
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
@@ -41,11 +42,14 @@ export default {
         right: [-25, -35],
       };
 
+      var address = coordinates[2];
       var marker = new tt.Marker().setLngLat(location).addTo(map);
       var popup = new tt.Popup({ offset: popupOffsets }).setHTML(
         "Your address!"
       );
       marker.setPopup(popup).togglePopup();
+
+      map.setCenter(location);
     }
 
     return {
@@ -58,6 +62,6 @@ export default {
 <style>
 #map {
   height: 50vh;
-  width: 50vw;
+  width: 100%;
 }
 </style>
