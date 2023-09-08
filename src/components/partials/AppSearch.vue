@@ -210,10 +210,10 @@ export default {
         background-position: top;
       "
     >
-      <h1 style="z-index: 20" class="text-white text-6xl mt-12">
+      <h1 style="z-index: 20" class="text-white text-3xl md:text-5xl mt-12">
         Benvenuto Nella sezione di ricerca avanzata.
       </h1>
-      <h2 style="z-index: 20" class="text-white text-3xl mt-12">
+      <h2 style="z-index: 20" class="text-white text-1xl md:text-3xl mt-12">
         Qui potrai cercare con facilità la destinazione dei tuoi sogni!
       </h2>
       <div class="black-layer"></div>
