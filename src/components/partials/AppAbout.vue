@@ -11,14 +11,14 @@ export default {
     <main>
         <section>
             <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://images.hdqwalls.com/wallpapers/bon-voyage-trip-4k-2d.jpg);">
-                <h1 style="z-index: 20;" class="text-white text-9xl mt-12">Chi siamo...</h1>
+                <h1 style="z-index: 20;" class="text-white md:text-9xl sm:text-6xl text-6xl mt-12">Chi siamo...</h1>
                 <h2 style="z-index: 20; font-style: italic;" class="text-white text-3xl mt-12">Una storia iniziata da una passione comune...</h2>
                 <div class="black-layer"></div>
             </div>
         </section>
         <section>
             <div class="p-1" style="background-color: #f7daf2;">
-            <h1 style="font-style: italic;" class="text-center text-6xl mt-32">Da viaggiatori...per i viaggiatori!</h1>
+            <h1 style="font-style: italic;" class="text-center md:text-6xl text-4xl   mt-32">Da viaggiatori...per i viaggiatori!</h1>
 
             <div class="my-32">
                 <div class="mb-7 flex justify-center">
@@ -27,7 +27,7 @@ export default {
                 </svg>
                 </div>
 
-                <p style="font-style: italic;" class="text-center text-4xl">Siamo un team di developers uniti dalla passione per i viaggi, abbiamo deciso di fondare (nome azienda) per poter offrire un servizio moderno, efficiente e accogliente per chiunque abbia sete di conoscenza ed esplorazione...</p>
+                <p style="font-style: italic;" class="text-center text-2xl md:text-4xl">Siamo un team di developers uniti dalla passione per i viaggi, abbiamo deciso di fondare (nome azienda) per poter offrire un servizio moderno, efficiente e accogliente per chiunque abbia sete di conoscenza ed esplorazione...</p>
 
                 <div class="mt-8 flex justify-center">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
@@ -39,7 +39,7 @@ export default {
         </section>
         <section>
             <div class="relative h-[85rem] bg-center flex-col text-center flex justify-center items-center" style="background-image: url(https://busites-www.s3.amazonaws.com/blog-margaritaville/2018/11/ThinkstockPhotos-891573112.jpg); background-repeat: no-repeat; background-size: cover;">
-                <h1 style="z-index: 20;" class="text-white text-9xl mt-12">Di cosa ci occupiamo?</h1>
+                <h1 style="z-index: 20;" class="text-white md:text-9xl sm:text-6xl text-6xl mt-12">Di cosa ci occupiamo?</h1>
                 <h2 style="z-index: 20;" class="text-white text-3xl mt-12">La nostra azienda si pone l'obbiettivo di ricercare per i voi, i nostri clienti, le migliori soluzioni per le vostre vacanze!</h2>
                 <div class="black-layer"></div>
             </div>
@@ -49,7 +49,7 @@ export default {
             <h1 style="font-style: italic;" class="text-center text-6xl mt-12">I nostri servizi!</h1>
 
             <div class="mt-12">
-                <ul style="font-style: italic; line-height: 3em;" class="text-center text-3xl">
+                <ul style="font-style: italic; line-height: 3em;" class="text-center text-1xl md:text-3xl">
                     <li class="flex justify-center mt-12"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                     </svg>
