@@ -26,7 +26,5 @@ export default {
 </template>
 
 <style>
-main {
-  padding-top: 88px; /* altezza header */
-}
+
 </style>

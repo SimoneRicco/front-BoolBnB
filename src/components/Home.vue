@@ -71,7 +71,7 @@ export default {
 <template>
   
 
-  <section id="carousel">
+  <section id="carousel" class="mt-24">
     <div id="indicators-carousel" class="relative w-full" data-carousel="slide">
       <div class="opacity h-full w-full absolute z-30"></div>
       <div class="centered">
