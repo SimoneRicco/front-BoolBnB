@@ -16,16 +16,24 @@ export default {};
         class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0"
       >
         <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6">Social 1</a>
+          <a href="#" class="mr-4 hover:underline md:mr-6">
+            <i class="fa-brands fa-instagram"></i
+          ></a>
         </li>
         <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6">Social 2</a>
+          <a href="#" class="mr-4 hover:underline md:mr-6"
+            ><i class="fa-brands fa-youtube"></i
+          ></a>
         </li>
         <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6">Social 3</a>
+          <a href="#" class="mr-4 hover:underline md:mr-6"
+            ><i class="fa-brands fa-x-twitter"></i
+          ></a>
         </li>
         <li>
-          <a href="#" class="hover:underline">Contatti</a>
+          <router-link :to="{ name: 'contacts' }" class="hover:underline"
+            >Contatti</router-link
+          >
         </li>
       </ul>
     </div>
