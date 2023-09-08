@@ -166,4 +166,8 @@ export default {
   </div>
 </template>
 
-<style></style>
+<style>
+img {
+  width: 100%;
+}
+</style>
