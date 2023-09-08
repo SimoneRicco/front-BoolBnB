@@ -1,9 +1,15 @@
 <script>
-// import axios from "axios";
-// import { store } from "../../../store";
+import MapsVue from "./Maps.vue";
 
 export default {
-  
+  components: {
+    MapsVue,
+  },
+  data() {
+    return {
+      staticCoordinates: [12.4963655, 41.9027835],
+    };
+  },
 };
 </script>
 
@@ -16,7 +22,9 @@ export default {
         <div
           class="flex flex-col w-5/12 sm:w-5/12 md:w-7/12 text-center bg-red-300 rounded-3xl p-3 opacity-90"
         >
-          <h1 class="text-3xl md:text-5xl text-white">Entra in contatto con noi</h1>
+          <h1 class="text-3xl md:text-5xl text-white">
+            Entra in contatto con noi
+          </h1>
           <h3 class="text-white mt-5">
             Contattaci per collaborare e rimanere sempre aggiornato sulle nostre
             promozioni e offerte speciali
@@ -24,11 +32,7 @@ export default {
         </div>
       </div>
     </div>
-    <h1 class="text-3xl my-3.5 text-center">
-      Iscriviti alla nostra newsletter
-    </h1>
 
-    
     <div class="w-screen flex flex-col w-fit content-center flex-wrap">
       <div class="w-1/2 flex justify-center items-center">
         <div class="left bg-red-300 p-4 my-6 rounded-3xl">
@@ -109,6 +113,10 @@ export default {
         </div>
       </div>
     </div>
+  </div>
+  <div class="p-12" style="background-color: #f7daf2">
+    <h1 class="p-6 text-center text-4xl">Puoi trovarci qui!</h1>
+    <MapsVue :coordinates="staticCoordinates" />
   </div>
 </template>
 
