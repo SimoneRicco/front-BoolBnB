@@ -27,7 +27,7 @@ export default {
                 </svg>
                 </div>
 
-                <p style="font-style: italic;" class="text-center text-2xl md:text-4xl">Siamo un team di developers uniti dalla passione per i viaggi, abbiamo deciso di fondare (nome azienda) per poter offrire un servizio moderno, efficiente e accogliente per chiunque abbia sete di conoscenza ed esplorazione...</p>
+                <p style="font-style: italic;" class="text-center text-2xl md:text-4xl">Siamo un team di developers uniti dalla passione per i viaggi, abbiamo deciso di fondare 'Haventrip' per poter offrire un servizio moderno, efficiente e accogliente per chiunque abbia sete di conoscenza ed esplorazione...</p>
 
                 <div class="mt-8 flex justify-center">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
