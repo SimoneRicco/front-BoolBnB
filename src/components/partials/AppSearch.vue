@@ -220,8 +220,8 @@ export default {
     </div>
   </section>
   <section
-    class="p-12"
-    style="border-top: 3px solid #f7daf2; border-bottom: 3px solid #f7daf2"
+    id="card-ricerca"
+    class="p-12 w-2/3"
   >
     <h1 class="text-4xl">Cerca per:</h1>
     <form class="mt-5" method="GET">
@@ -446,5 +446,9 @@ export default {
     box-shadow: -405px 0 0 400px #605e5c;
     border-radius: 50%;
   }
+}
+
+#card-ricerca{
+  margin-inline: auto;
 }
 </style>
