@@ -14,7 +14,7 @@ export default {
 </script>
 
 <template>
-  <div class="py-5" style="background-color: #f7daf2">
+  <div class="py-5" >
     <div
       class="h-screen bg-cover contact bg-[url('https://images.unsplash.com/photo-1533681852052-dba7a3e4ef81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80')]"
     >
@@ -114,7 +114,7 @@ export default {
       </div>
     </div>
   </div>
-  <div class="p-12" style="background-color: #f7daf2">
+  <div class="p-12" >
     <h1 class="p-6 text-center text-4xl">Puoi trovarci qui!</h1>
     <MapsVue :coordinates="staticCoordinates" />
   </div>
