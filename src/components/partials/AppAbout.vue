@@ -17,7 +17,7 @@ export default {
             </div>
         </section>
         <section>
-            <div class="p-1" style="background-color: #f7daf2;">
+            <div class="p-1">
             <h1 style="font-style: italic;" class="text-center md:text-6xl text-4xl   mt-32">Da viaggiatori...per i viaggiatori!</h1>
 
             <div class="my-32">
@@ -45,7 +45,7 @@ export default {
             </div>
         </section>
         <section>
-            <div class="p-5" style="background-color: #f7daf2;">
+            <div class="p-5">
             <h1 style="font-style: italic;" class="text-center text-6xl mt-12">I nostri servizi!</h1>
 
             <div class="mt-12">

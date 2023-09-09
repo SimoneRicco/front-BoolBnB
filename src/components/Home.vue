@@ -75,7 +75,7 @@ export default {
     <div id="indicators-carousel" class="relative w-full" data-carousel="slide">
       <div class="opacity h-full w-full absolute z-30"></div>
       <div class="centered">
-        <h1 id="slogan">Frase ideata da Alessio</h1>
+        <h1 id="slogan" style="font-style: oblique;">Don't skip the trip...Choose Haventrip!</h1>
         <button class="search mt-3 text-white bg-blue-500 hover:bg-blue-700">
           <router-link :to="{ name: 'search' }">
             Cerca la tua destinazione...
@@ -251,7 +251,7 @@ export default {
 
 
       <div class="w-full flex justify-center">
-        <nav aria-label="Page navigation example">
+        <nav style="z-index: 1;" aria-label="Page navigation example">
           <ul class="inline-flex -space-x-px text-sm">
             <li>
               <a
