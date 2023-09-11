@@ -20,7 +20,7 @@ export default {
     >
       <div class="h-screen flex flex-col justify-center items-center">
         <div
-          class="flex flex-col w-5/12 sm:w-5/12 md:w-7/12 text-center bg-red-300 rounded-3xl p-3 opacity-90"
+          class="flex flex-col w-5/12 sm:w-5/12 md:w-7/12 text-center bg-slate-400 rounded-3xl p-3 opacity-90"
         >
           <h1 class="text-3xl md:text-5xl text-white">
             Entra in contatto con noi
@@ -35,15 +35,15 @@ export default {
 
     <div class="w-screen flex flex-col w-fit content-center flex-wrap">
       <div class="w-1/2 flex justify-center items-center">
-        <div class="left bg-red-300 p-4 my-6 rounded-3xl">
-          <h1 class="mb-12 text-4xl">Seguici sui nostri social!</h1>
+        <div class="left bg-slate-400 p-4 my-6 rounded-3xl">
+          <h1 class="mb-12 text-4xl text-white">Seguici sui nostri social!</h1>
           <div class="social flex justify-center gap-x-10">
             <a href="">
               <svg
                 class="w-12 h-12 text-gray-800 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
+                fill="white"
                 viewBox="0 0 8 19"
               >
                 <path
@@ -54,18 +54,8 @@ export default {
               </svg>
             </a>
             <a href="">
-              <svg
-                class="w-12 h-12 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 17"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z"
-                  clip-rule="evenodd"
-                />
+              <svg class="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path fill="white" d="M12.186 8.672 18.743.947h-2.927l-5.005 5.9-4.44-5.9H0l7.434 9.876-6.986 8.23h2.927l5.434-6.4 4.82 6.4H20L12.186 8.672Zm-2.267 2.671L8.544 9.515 3.2 2.42h2.2l4.312 5.719 1.375 1.828 5.731 7.613h-2.2l-4.699-6.237Z"/>
               </svg>
             </a>
             <a href="">
@@ -73,7 +63,7 @@ export default {
                 class="w-12 h-12 text-gray-800 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
+                fill="white"
                 viewBox="0 0 20 14"
               >
                 <path
