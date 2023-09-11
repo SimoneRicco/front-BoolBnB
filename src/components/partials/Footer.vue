@@ -22,7 +22,7 @@ export default {};
           </li>
         <li class="social">
           <a href="#">
-            <i class="fab fa-twitter"></i>
+            <i class="fab fa-x-twitter"></i>
           </a>
           
         </li>

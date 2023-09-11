@@ -76,7 +76,7 @@ export default {
       <div class="opacity h-full w-full absolute z-30"></div>
       <div class="centered">
         <h1 class="text-md md:text-4xl text-white" style="font-style: oblique;">Don't skip the trip...Choose Haventrip!</h1>
-        <button class="mt-10 search animate-bounce text-sm md:text-xl mt-3 text-white bg-blue-500 hover:bg-blue-700">
+        <button class="mt-24 search animate-bounce text-sm md:text-xl mt-3 text-white bg-blue-500 hover:bg-blue-700">
           <router-link :to="{ name: 'search' }">
             Cerca la tua destinazione...
           </router-link>
