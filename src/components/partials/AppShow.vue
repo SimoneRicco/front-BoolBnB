@@ -275,11 +275,11 @@ export default {
       <section class="w-12/12 p-5 md:w-6/12">
         <h1 class="text-4xl mb-12">Informazioni sulla struttura:</h1>
         <div class="text-3xl mb-12 flex items-baseline">
-          <h2 class="text-blue-800">Numero di camere:</h2>
+          <h2 class="text-blue-800">Stanze:</h2>
           <span class="ml-5">{{ apartment.rooms }}</span>
         </div>
         <div class="text-3xl mb-12 flex items-baseline">
-          <h2 class="text-blue-800">Numero di bagni:</h2>
+          <h2 class="text-blue-800">Bagni:</h2>
           <span class="ml-5">{{ apartment.bathrooms }}</span>
         </div>
         <div class="text-3xl mb-12 flex items-baseline">

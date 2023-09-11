@@ -76,7 +76,7 @@ export default {
       <div class="opacity h-full w-full absolute z-30"></div>
       <div class="centered">
         <h1 class="text-md md:text-4xl text-white" style="font-style: oblique;">Don't skip the trip...Choose Haventrip!</h1>
-        <button class="search text-sm md:text-xl mt-3 text-white bg-blue-500 hover:bg-blue-700">
+        <button class="mt-10 search animate-bounce text-sm md:text-xl mt-3 text-white bg-blue-500 hover:bg-blue-700">
           <router-link :to="{ name: 'search' }">
             Cerca la tua destinazione...
           </router-link>
@@ -225,6 +225,8 @@ export default {
     </div>
   </section>
 
+  
+
   <section class="p-5">
     <div class="flex">
       <h1 class="text-4xl">In Evidenza</h1>
@@ -309,6 +311,44 @@ export default {
       </div>
     </div>
   </section>
+  <section class="p-5 w-full lg:flex">
+    <div class="w-full lg:w-1/3">
+      <img style="border-radius: 20px;" src="https://worldinparis.com/wp-content/uploads/2018/06/paris-travel-planning.jpg" alt="">
+    </div>
+    <div class="w-full lg:w-2/3 p-5">
+      <h2 class="title">
+        <span class="title-word title-word-1 text-4xl">Inizia a </span>
+        <span class="title-word title-word-2 text-4xl"> viaggiare</span>
+        <span class="title-word title-word-3 text-4xl"> con</span>
+        <span class="title-word title-word-4 text-4xl"> Haventrip!</span>
+      </h2>
+      <p class="text-xl mt-5">Con HavenTrip hai tutto ciò che ti serve per iniziare a pianificare la tua vacanza da sogno!</p>
+      <div class="md:flex gap-3 mt-5">
+      <div href="#" class="mt-3 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <div>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-900 dark:text-white">Cerca e richiedi informazioni.</h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">HavenTrip verifica personalmente ogni struttura presente nel sistema.</p>
+        </div>
+      </div>
+      
+      <div href="#" class="mt-3 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"> 
+          <div>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-900 dark:text-white">Affidati a un team di esperti.</h5>
+            <p class="font-normal text-gray-700 dark:text-gray-400">La nostra mission ci impone di finalizzare con tutte le risorse possibili l'idea di vacanza richiesta dai nostri clienti.</p>
+          </div>
+      </div>
+      </div>
+    </div>
+  </section>
+  
+    
+  <section class="mt-10 bg-center bg-no-repeat bg-[url('https://en.bailypearl.com/wp-content/uploads/2021/05/villa-la-croix-valmer-facade-2-2-2560x1633.jpg')] bg-gray-400 bg-blend-multiply">
+      <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
+          <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Viaggiare per credere!</h1>
+          <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">La casa dei tuoi sogni...aspetta solo te.</p>
+      </div>
+  </section>
+
 </template>
 
 <style scoped>
@@ -346,5 +386,58 @@ export default {
 }
 .opacity {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.title-word {
+  animation: color-animation 4s linear infinite;
+}
+
+.title-word-1 {
+  --color-1: #DF8453;
+  --color-2: #3D8DAE;
+  --color-3: #E4A9A8;
+}
+
+.title-word-2 {
+  --color-1: #DBAD4A;
+  --color-2: #ACCFCB;
+  --color-3: #17494D;
+}
+
+.title-word-3 {
+  --color-1: #ACCFCB;
+  --color-2: #E4A9A8;
+  --color-3: #ACCFCB;
+}
+
+.title-word-4 {
+  --color-1: #3D8DAE;
+  --color-2: #DF8453;
+  --color-3: #E4A9A8;
+}
+
+@keyframes color-animation {
+  0%    {color: var(--color-1)}
+  32%   {color: var(--color-1)}
+  33%   {color: var(--color-2)}
+  65%   {color: var(--color-2)}
+  66%   {color: var(--color-3)}
+  99%   {color: var(--color-3)}
+  100%  {color: var(--color-1)}
+}
+
+/* Here are just some visual styles. 🖌 */
+
+.container {
+  display: grid;
+  place-items: center;  
+  text-align: center;
+  height: 100vh
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 2.5vw;
 }
 </style>

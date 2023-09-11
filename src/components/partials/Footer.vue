@@ -8,28 +8,28 @@ export default {};
       <div class="p-5 sm:1/1">
       <h1 style="font-style: italic;" class="text-5xl">HavenTrip</h1>
       <h3 class="mt-5 text-2xl" style="font-style: oblique;">Da viaggiatori....per Viaggiatori...</h3>
-      <div class="mt-1 flex">
-        <ul
-        class="flex flex-wrap items-center mt-3 text-2xl font-medium  dark:text-blue-400 sm:mt-0"
-      >
-        <li>
-          <a href="https://www.instagram.com/" class="mr-4 hover:underline md:mr-6">
-            <i class="fa-brands fa-instagram"></i
-          ></a>
+      <div class="mt-1 flex mt-5">
+        <ul class="socials flex">
+        <li class="social">
+          <a href="#">
+            <i class="fab fa-youtube"></i>
+          </a>
         </li>
-        <li>
-          <a href="https://www.youtube.com/" class="mr-4 hover:underline md:mr-6"
-            ><i class="fa-brands fa-youtube"></i
-          ></a>
+        <li class="social">
+          <a href="#">
+            <i class="fab fa-facebook"></i>
+          </a>
+          </li>
+        <li class="social">
+          <a href="#">
+            <i class="fab fa-twitter"></i>
+          </a>
+          
         </li>
-        <li>
-          <a href="https://twitter.com/?lang=en" class="mr-4 hover:underline md:mr-6"
-            ><i class="fa-brands fa-x-twitter"></i
-          ></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/" class="mr-4 hover:underline md:mr-6"
-            ><i class="fa-brands fa-facebook"></i></a>
+        <li class="social">
+          <a href="#">
+            <i class="fab fa-instagram"></i>
+          </a> 
         </li>
       </ul>
       </div>
@@ -100,6 +100,55 @@ li{
 }
 li:hover{
   color: blue;
+}
+
+
+.socials {
+  transform: translate( -1%);
+}
+
+.socials .social {
+  list-style: none;
+  margin: 0 15px;
+}
+
+.socials .social a {
+  position: relative; 
+  display: block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 63px;
+  background: #333;
+  border-radius: 50%;
+  font-size: 30px;
+  color: #666;
+  transition: .5s;
+}
+
+.socials .social a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #106cff;
+  transition: .5s;
+  transform: scale(.9);
+  z-index: -1;
+}
+
+.socials .social a:hover::before {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #106cff;
+}
+
+.socials .social a:hover {
+  color: #106cff;
+  box-shadow: 0 0 5px #106cff;
+  text-shadow: 0 0 5px #106cff;
 }
 
 
